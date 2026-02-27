@@ -5,13 +5,11 @@ import AImpatin from '../../assets/EducaiteRobot.svg'
 import logo from '../../assets/educAIte logo.svg' 
 import UploadModal from './component/UploadModal'
 
-const courses = [
-  { id: "19174", title: "Programming Languages", mastery: 90, color: "bg-[#c084fc]" },
-  { id: "19208", title: "Human Computer Interaction", mastery: 98, color: "bg-[#4ade80]" },
-  { id: "19158", title: "Information Management", mastery: 65, color: "bg-[#00CEC8]" },
-  { id: "19999", title: "Cloud Computing", mastery: 40, color: "bg-[#facc15]" },
-];
+import { courses } from '../../data/courses'
 
+{courses.map((course) => (
+  <CourseCard key={course.id} {...course} /> 
+))}
 const CoursePage = () => {
   // --- Custom Drag-to-Scroll Logic (Kept exactly as you had it) ---
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -43,12 +41,10 @@ const CoursePage = () => {
     <>
       <div className="min-h-screen bg-black text-white pt-32 pb-12 px-8 lg:px-16 font-sans relative overflow-x-hidden antialiased">
         
-        {/* LOGO: Moved to the absolute top-left to match your screenshots */}
-        <img 
-          src={logo} 
-          alt="educAIte" 
-          className="absolute top-8 left-8 lg:top-10 lg:left-16 h-8 w-auto object-contain z-20" 
-        />
+        {/* LOGO */}
+        <div className="absolute top-10 left-12">
+          <img src={logo} alt="educAIte" className="h-10" />
+        </div>
 
         {/* SEMESTER DROPDOWN: Positioned right above the cards */}
         <div className="flex justify-end mb-8 relative z-20 w-full max-w-[1600px] mx-auto">

@@ -35,15 +35,15 @@ const OverallPerformance = () => {
         </div>
         <div>
           <div className="flex justify-between text-[10px] mb-1 font-medium"><span>Study Time Goal</span><span>8h9%</span></div>
-          <div className="h-2.5 bg-white/20 rounded-full"><div className="h-full bg-[#64748b] rounded-full w-[65%]"></div></div>
+          <div className="h-2.5 bg-white/20 rounded-full"><div className="h-full bg-white rounded-full w-[65%]"></div></div>
         </div>
         <div>
           <div className="flex justify-between text-[10px] mb-1 font-medium"><span>Flashcards</span><span>84%</span></div>
-          <div className="h-2.5 bg-white/20 rounded-full"><div className="h-full bg-[#64748b] rounded-full w-[84%]"></div></div>
+          <div className="h-2.5 bg-white/20 rounded-full"><div className="h-full bg-white rounded-full w-[84%]"></div></div>
         </div>
         <div>
           <div className="flex justify-between text-[10px] mb-1 font-medium"><span>Tasks</span><span>80%</span></div>
-          <div className="h-2.5 bg-white/20 rounded-full"><div className="h-full bg-[#64748b] rounded-full w-[80%]"></div></div>
+          <div className="h-2.5 bg-white/20 rounded-full"><div className="h-full bg-white rounded-full w-[80%]"></div></div>
         </div>
       </div>
 

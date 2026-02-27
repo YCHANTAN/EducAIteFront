@@ -7,10 +7,18 @@ import ActivityHeatmap from './components/ActivityHeatmap'
 import LearningTrendAnalysis from './components/LearningTrendAnalysis'
 import BestPerformingCourse from './components/BestPerformingCourse'
 import MultiLineChartCard from './components/MultiLineChartCard'
+import logo from '../../assets/educAIte-logo.svg'
 
 const AnalyticsPage = () => {
   return (
+
     <div className="min-h-screen bg-black text-white pt-32 pb-20 px-8 font-sans">
+
+      {/* Logo placed on the top left */}
+      <div className="absolute top-10 left-12">
+        <img src={logo} alt="educAIte" className="h-10" />
+      </div>
+      
       <div className="max-w-[1400px] mx-auto flex flex-col gap-8">
         
         {/* Top Header */}

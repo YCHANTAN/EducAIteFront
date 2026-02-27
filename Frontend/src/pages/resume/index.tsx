@@ -11,7 +11,7 @@ const ResumePage = () => {
       
       {/* Logo placed on the top left */}
       <div className="absolute top-10 left-12">
-        <img src={logo} alt="educAIte" className="h-8" />
+        <img src={logo} alt="educAIte" className="h-10" />
       </div>
 
       <div className="max-w-7xl mx-auto px-12 flex flex-col items-center">
