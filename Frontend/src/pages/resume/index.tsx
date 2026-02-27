@@ -1,6 +1,6 @@
 import React from 'react'
-import logo from '../../assets/educAIte logo.svg'
-import template1 from '../../assets/Resume1.svg'
+import logo from '../../assets/educAIte-logo.svg'
+import template1 from './../../assets/Resume1.svg'
 import template2 from '../../assets/Resume2.svg'
 import template3 from '../../assets/Resume3.svg'
 

@@ -3,7 +3,12 @@ import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 import settingIcon from './assets/Setting Icon.svg' 
 
 import Main from './pages/main'
-/* ... other imports ... */
+import CoursePage from './pages/course'
+import AnalyticsPage from './pages/analytics'
+import FlashcardsPage from './pages/flashcards'
+import TrackerPage from './pages/tracker'
+import ResumePage from './pages/resume'
+import SettingsPage from './pages/settings'
 
 function App() {
   return (
@@ -67,10 +72,15 @@ function App() {
         <main className="max-w-5xl mx-auto">
           <Routes>
              <Route path="/" element={<Main />} />
-             {/* ... */}
+             <Route path="/course" element={<CoursePage />} />
+             <Route path="/analytics" element={<AnalyticsPage />} />
+             <Route path="/flashcards" element={<FlashcardsPage />} />
+             <Route path="/tracker" element={<TrackerPage />} />
+             <Route path="/resume" element={<ResumePage />} />
+             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>
-      </div>
+      </div>  
     </BrowserRouter>
   )
 }
