@@ -8,15 +8,14 @@ import SecondaryCalendar from './components/SecondaryCalendar';
 
 const Calendar: React.FC = () => {
     return (
-        <>
+        <div>
             <h1>Calendar</h1>
             <Search />
             <MainCalendar />
             <AddEvent />
             <SecondaryCalendar />
             <UpcomingEvents />
-
-        </>
+        </div>
     )
 };
 
