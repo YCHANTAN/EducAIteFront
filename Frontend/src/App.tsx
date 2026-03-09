@@ -13,6 +13,7 @@ import FlashcardsPage from './pages/flashcards'
 import TrackerPage from './pages/tracker'
 import ResumePage from './pages/resume'
 import SettingsPage from './pages/settings'
+import CreateNotes from './pages/course/component/CreateNotes'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             {/* Specific Course Files View */}
             {/* The :id allows you to catch the specific course clicked (e.g., /courses/19174) */}
             <Route path="/courses/:id" element={<CourseDetails />} />
+            <Route path="/create-notes" element={<CreateNotes />} />
             
             {/* Other Feature Routes */}
             <Route path="/analytics" element={<AnalyticsPage />} />
