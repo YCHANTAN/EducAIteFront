@@ -6,7 +6,7 @@ import Table from './components/Table'
 
 //all data here
 //stud name
-const name: String = "Christian"
+const name: string = "Christian"
 
 //Semester selections:
 const Semester = Object.freeze({
@@ -20,7 +20,7 @@ const Semester = Object.freeze({
     FOURTH_YEAR_SECOND_SEM: "4th year - Second semester",
 })
 
-//grades from 1st year 1st sem to 2nd year 2nd sem only
+//grades from 1st year-1st sem to 2nd year-2nd sem only
 const data = [
     {
         semester: Semester.FIRST_YEAR_FIRST_SEM,
@@ -162,8 +162,8 @@ const data = [
 
 
 const Tracker: React.FC = () => {
-    const [currentSem, setCurrentSem] = useState<String>(Semester.FIRST_YEAR_FIRST_SEM)
-    const handleSemSelection = (value: String) => {
+    const [currentSem, setCurrentSem] = useState<string>(Semester.FIRST_YEAR_FIRST_SEM)
+    const handleSemSelection = (value: string) => {
         setCurrentSem(value)
     }
 

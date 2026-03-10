@@ -2,8 +2,8 @@ import React from 'react'
 
 
 interface Props {
-    name: String,
-    semester: String
+    name: string,
+    semester: string
 }
 
 

@@ -2,8 +2,8 @@ import React from 'react'
 
 
 interface Props {
-    selections: any[],
-    onSelectChange: (value: String) => void
+    selections: string[],
+    onSelectChange: (value: string) => void
 }
 
 
