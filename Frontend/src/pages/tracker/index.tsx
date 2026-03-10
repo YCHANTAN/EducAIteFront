@@ -4,6 +4,7 @@ import DropdownSemester from './components/DropdownSemester'
 import Table from './components/Table'
 
 
+//all data here
 //stud name
 const name: String = "Christian"
 
@@ -19,7 +20,7 @@ const Semester = Object.freeze({
     FOURTH_YEAR_SECOND_SEM: "4th year - Second semester",
 })
 
-//dummy data - grades from 1st year 1st sem to 2nd year 2nd sem only
+//grades from 1st year 1st sem to 2nd year 2nd sem only
 const data = [
     {
         semester: Semester.FIRST_YEAR_FIRST_SEM,
@@ -166,13 +167,11 @@ const Tracker: React.FC = () => {
         setCurrentSem(value)
     }
 
-    const grades = data.filter(s => s.semester === currentSem)[0].courses
-
     return (
         <div>
             <Header name={name} semester={currentSem} />
             <DropdownSemester selections={Object.values(Semester)} onSelectChange={handleSemSelection} />
-            <Table data={grades} />
+            <Table data={data.filter(s => s.semester === currentSem)[0].courses} />
         </div>
     )
 }
