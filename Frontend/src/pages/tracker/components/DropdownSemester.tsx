@@ -1,24 +1,27 @@
 import React from 'react'
 
+
 interface Props {
-    selections: any[]
+    selections: any[],
+    onSelectChange: (value: String) => void
 }
 
-//todo - replace with actual value
-const DropdownSemester = ({selections}: Props) => (
-    <>
-        <select
-            // id="dropdown"
-            // value={selectedOption}
-            // onChange={handleSelectChange}
-            className="bg-black text-white border border-white p-2 rounded"
-        >
-            {selections.map((item, i) => <option value={"option"+i}>{item}</option>)}
-        </select>
-        {/* {selectedOption && ( */}
-            {/* <p>You selected: {selectedOption}</p> */}
-        {/* )} */}
-    </>
-)
+
+const DropdownSemester = ({ selections, onSelectChange }: Props) => {
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        onSelectChange(event.target.value)
+    }
+
+    return (
+        <>
+            <select
+                onChange={handleChange}
+                className="bg-black text-white border border-white p-2 rounded"
+            >
+                {selections.map((item, i) => <option key={i} value={item}>{item}</option>)}
+            </select>
+        </>
+    )
+}
 
 export default DropdownSemester
