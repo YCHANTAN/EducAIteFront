@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 import settingIcon from './assets/Setting Icon.svg' 
 
 import Main from './pages/main'
+import Tracker from './pages/tracker'
 /* ... other imports ... */
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
         <main className="max-w-5xl mx-auto">
           <Routes>
              <Route path="/" element={<Main />} />
+             <Route path="/tracker" element={<Tracker />} />
              {/* ... */}
           </Routes>
         </main>
