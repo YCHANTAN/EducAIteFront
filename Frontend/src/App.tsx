@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, NavLink, Outlet } from 'react-router-dom'
+import settingIcon from './assets/Setting Icon.svg'
 
 // Layout Components
 import Navbar from './components/Navbar'
