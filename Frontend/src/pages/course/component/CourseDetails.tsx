@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { courses } from '../../../data/courses'
 import logo from '../../../assets/educAIte-logo.svg'
-import AImpatin from '../../../assets/EducaiteRobot.svg'
+import AImpatin from '../../../assets/robot.svg'
 
 // Component Imports
 import ImportFileModal from './ImportFileModal'
