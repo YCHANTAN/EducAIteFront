@@ -169,12 +169,20 @@ const Tracker: React.FC = () => {
     }
 
     return (
-        <div>
-            <div className='flex flex-row justify-between items-center mb-4'>
+        <div className="max-w-7xl mx-auto p-6">
+
+            <div className="flex flex-row justify-between items-end mb-10">
                 <Header name={name} semester={currentSem} />
-                <DropdownSemester selections={Object.values(Semester)} onSelectChange={handleSemSelection} />
+
+                <div className="shrink-0">
+                    <DropdownSemester
+                        selections={Object.values(Semester)}
+                        onSelectChange={handleSemSelection}
+                    />
+                </div>
             </div>
-            <div className="mt-4">
+
+            <div className="mt-8 bg-black border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
                 <Table data={data.filter(s => s.semester === currentSem)[0].courses} />
             </div>
         </div>
