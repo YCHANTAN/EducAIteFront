@@ -1,8 +1,8 @@
 import React from 'react';
 import LandingPageNavbar from '../../components/LandingPageNavbar';
 import LandingPageContent from './components/LandingPage';
-// 1. IMPORT THE NEW SECTION
 import FeatureCarousel from './components/FeatureCarousel'; 
+import Developers from './components/Developers';
 
 const LandingPage = () => {
   return (
@@ -12,17 +12,14 @@ const LandingPage = () => {
       {/* The Navigation Bar stays fixed at the top */}
       <LandingPageNavbar />
 
-      {/* --- SECTION 1: HERO --- */}
-      {/* We wrap the original content in an explicitly h-screen, relative container 
-          so its absolute positioning logic still works flawlessly! */}
+      {/* --- SECTION 1: LANDING CONTENT --- */}
       <div className="relative w-full h-screen overflow-hidden">
         <LandingPageContent />
       </div>
-
       {/* --- SECTION 2: CAROUSEL --- */}
-      {/* This sits right below the hero section, scrollable into view */}
       <FeatureCarousel />
-
+      {/* --- SECTION 2: Developers --- */}
+      <Developers />
     </div>
   );
 };
