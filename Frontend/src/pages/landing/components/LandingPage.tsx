@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Imported the hook
 
 import RobotImage from '../../../assets/robot.svg';
 import EarthImage from '../../../assets/earthbg.svg';
@@ -13,6 +14,8 @@ import AtomIcon from '../../../assets/lg-atom.svg';
 import LaptopIcon from '../../../assets/lg-laptop.svg';
 
 const LandingPageContent = () => {
+  const navigate = useNavigate(); // 2. Initialized navigate
+
   return (
     <>
       {/* --- HERO TEXT SECTION --- */}
@@ -58,12 +61,23 @@ const LandingPageContent = () => {
 
       {/* --- CTA BUTTONS --- */}
       <div className="absolute bottom-[8vh] left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-3 w-full max-w-[280px]">
-        <button className="w-full bg-white text-black font-semibold text-[15px] py-3.5 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 transition-transform pointer-events-auto">
+        
+        {/* 3. Added onClick handler to Login */}
+        <button 
+          onClick={() => navigate('/login')}
+          className="w-full bg-white text-black font-semibold text-[15px] py-3.5 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 transition-transform pointer-events-auto"
+        >
           Login
         </button>
-        <button className="w-full bg-black border border-white/20 text-white font-semibold text-[15px] py-3.5 rounded-full hover:bg-white/10 transition-colors pointer-events-auto">
+        
+        {/* 4. Added onClick handler to Register */}
+        <button 
+          onClick={() => navigate('/register')}
+          className="w-full bg-black border border-white/20 text-white font-semibold text-[15px] py-3.5 rounded-full hover:bg-white/10 transition-colors pointer-events-auto"
+        >
           Register
         </button>
+
       </div>
     </>
   );
