@@ -10,9 +10,10 @@ const LandingPageNavbar = () => {
   ];
 
   return (
-    <header className="flex justify-center pt-8 fixed w-full z-50 pointer-events-none">
+    <header className="flex justify-center pt-8 fixed w-full z-[100] pointer-events-none">
       
-      <nav className="flex items-center bg-black/50 backdrop-blur-md border-[1.5px] border-white/20 px-12 py-4 rounded-full gap-10 shadow-[0_8px_30px_rgba(255,255,255,0.15)] pointer-events-auto">
+      {/* UPDATED: Increased the white shadow opacity to 0.4 and the blur to 40px */}
+      <nav className="flex items-center bg-black/50 backdrop-blur-md border-[1.5px] border-white/20 px-12 py-4 rounded-full gap-10 shadow-[0_10px_40px_rgba(255,255,255,0.4)] pointer-events-auto">
         
         {navItems.map((item) => (
           <NavLink
@@ -24,7 +25,7 @@ const LandingPageNavbar = () => {
               }`
             }
           >
-            {item.name} 
+            {item.name}
           </NavLink>
         ))}
         

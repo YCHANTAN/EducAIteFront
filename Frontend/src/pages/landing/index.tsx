@@ -3,6 +3,7 @@ import LandingPageNavbar from '../../components/LandingPageNavbar';
 import LandingPageContent from './components/LandingPage';
 import FeatureCarousel from './components/FeatureCarousel'; 
 import Developers from './components/Developers';
+import Footer from './components/Footer';
 
 const LandingPage = () => {
   return (
@@ -18,8 +19,10 @@ const LandingPage = () => {
       </div>
       {/* --- SECTION 2: CAROUSEL --- */}
       <FeatureCarousel />
-      {/* --- SECTION 2: Developers --- */}
+      {/* --- SECTION 3: Developers --- */}
       <Developers />
+      {/* --- SECTION 4: Footer --- */}
+      <Footer />
     </div>
   );
 };
