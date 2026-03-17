@@ -33,7 +33,7 @@ function AppContent() {
         <Routes>
           
           <Route path="/" element={<LandingPage />} />
-          <Route path="/" element={<Main />} />
+          <Route path="/main" element={<Main />} />
           <Route path="/courses" element={<CoursePage />} />
           <Route path="/course" element={<CoursePage />} />
           <Route path="/courses/:id" element={<CourseDetails />} />
