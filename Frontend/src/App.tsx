@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
+import EducAIteAssistantRobot from './components/EducAIteAssistantRobot'
+import Logo from './components/Logo'
 
 import LandingPage from "./pages/landing";
 import Main from './pages/main'
@@ -27,8 +29,13 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans antialiased">
-      {!hideNavbar && <Navbar />}
-
+      {!hideNavbar && (
+        <>
+          <Logo />
+          <Navbar />
+          <EducAIteAssistantRobot />
+        </>
+      )}
       <main>
         <Routes>
           
