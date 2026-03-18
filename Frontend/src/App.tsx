@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 
+import LandingPage from "./pages/landing";
 import Main from './pages/main'
 import CoursePage from './pages/course'
 import CourseDetails from './pages/course/component/CourseDetails'
@@ -19,6 +20,7 @@ function AppContent() {
   const location = useLocation()
 
   const hideNavbar =
+    location.pathname === '/' ||
     location.pathname === '/login' ||
     location.pathname === '/register' ||
     location.pathname.startsWith('/auth')
@@ -29,7 +31,9 @@ function AppContent() {
 
       <main>
         <Routes>
-          <Route path="/" element={<Main />} />
+          
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/main" element={<Main />} />
           <Route path="/courses" element={<CoursePage />} />
           <Route path="/course" element={<CoursePage />} />
           <Route path="/courses/:id" element={<CourseDetails />} />
@@ -40,6 +44,7 @@ function AppContent() {
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/settings" element={<SettingsPage />} />
 
+        
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
