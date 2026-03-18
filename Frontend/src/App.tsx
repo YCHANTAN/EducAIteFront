@@ -17,6 +17,7 @@ import SettingsPage from './pages/settings'
 import CreateNotes from './pages/course/component/CreateNotes'
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
+import Calender from './pages/calendar'
 
 function AppContent() {
   const location = useLocation()
@@ -50,6 +51,8 @@ function AppContent() {
           <Route path="/tracker" element={<TrackerPage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/calendar" element={<Calender />} />
+
 
         
           <Route path="/login" element={<Login />} />
