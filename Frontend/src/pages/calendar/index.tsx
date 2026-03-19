@@ -54,11 +54,29 @@ const Calendar: React.FC = () => {
         )
     }
 
+    const [highlightedDate, setHighlightedDate] = useState<string | null>(null);
+
+    const handleSearchResultClick = (dateString: string) => {
+        const [y, m, d] = dateString.split('-').map(Number);
+
+        setMonth(m - 1); 
+        setYear(y);
+        
+        setHighlightedDate(dateString);
+    
+        setTimeout(() => {
+            setHighlightedDate(null);
+        }, 3000);
+    };
+
     return (
         <div className="p-6 max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">Calendar</h1>
-                <Search />
+                <h1 className="text-2xl font-bold mt-40">Calendar</h1>
+                <Search
+                    events={events}
+                    onResultClick={handleSearchResultClick}
+                />
             </div>
 
             <div className="flex justify-start mb-6">
@@ -72,7 +90,12 @@ const Calendar: React.FC = () => {
             <div className="flex flex-col md:flex-row gap-6">
 
                 <div className="w-full md:w-2/3">
-                    <MainCalendar events={events} month={currentMonth} year={currentYear} />
+                    <MainCalendar
+                        events={events}
+                        month={currentMonth}
+                        year={currentYear}
+                        highlightedDate={highlightedDate}
+                    />
                 </div>
 
                 <div className="w-full md:w-1/3 flex flex-col gap-4">

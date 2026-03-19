@@ -4,29 +4,32 @@ import React from 'react';
 interface Props {
     events: any[],
     month: number,
-    year: number
+    year: number,
+    highlightedDate?: string | null
 }
 
 
-const MainCalendar = ({ events, month, year }: Props) => {
-    const currentMonth = month
-    const currentYear = year
+const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
+    const highlightParts = highlightedDate ? highlightedDate.split('-').map(Number) : null;
+    const hYear = highlightParts ? highlightParts[0] : null;
+    const hMonth = highlightParts ? highlightParts[1] - 1 : null; // 0-indexed
+    const hDay = highlightParts ? highlightParts[2] : null;
 
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const items = events.map(item => {
-        const [year, month, day] = item.date.split('-');
+        const [y, m, d] = item.date.split('-');
         return {
             ...item,
-            day: Number(day),
-            month: Number(month) - 1, //month is zero based - january = 0
-            year: Number(year)
+            day: Number(d),
+            month: Number(m) - 1,
+            year: Number(y)
         };
     });
 
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
 
     return (
         <div className="bg-black rounded-2xl shadow-md border border-gray-700 overflow-hidden">
@@ -43,29 +46,36 @@ const MainCalendar = ({ events, month, year }: Props) => {
                     <div key={`empty-${i}`} className="border-r border-b border-gray-700 bg-gray-800" />
                 ))}
 
-                {days.map(day => (
-                    <div key={day} className="border-r border-b border-gray-700 p-2 hover:bg-gray-700 transition-colors group cursor-pointer relative">
-                        <span className="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors">
-                            {day}
-                        </span>
+                {days.map(day => {
+                    const isHighlighted = hYear === year && hMonth === month && hDay === day;
 
-                        <div className="mt-1 space-y-1.5 overflow-y-auto max-h-[90px] no-scrollbar">
-                            {items
-                                .filter(item => item.day === day && item.month === currentMonth && item.year === currentYear)
-                                .map((item, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`text-[11px] px-2 py-1 rounded-md font-semibold border shadow-sm truncate transition-transform hover:scale-[1.02] ${item.eventType === 'note'
-                                            ? 'bg-orange-600 text-white border-orange-300'
-                                            : 'bg-green-600 text-white border-green-300'
-                                            }`}
-                                    >
-                                        {item.title}
-                                    </div>
-                                ))}
+                    return (
+                        <div key={day}
+                            className={`border-r border-b border-gray-700 p-2 transition-all duration-500 group cursor-pointer relative
+                             ${isHighlighted ? 'bg-indigo-900/40 ring-2 ring-inset ring-indigo-500 z-10' : 'hover:bg-gray-700'}`}>
+
+                            <span className={`text-sm font-bold transition-colors 
+                                ${isHighlighted ? 'text-indigo-300' : 'text-white group-hover:text-indigo-400'}`}>
+                                {day}
+                            </span>
+
+                            <div className="mt-1 space-y-1.5 overflow-y-auto max-h-[90px] no-scrollbar">
+                                {items
+                                    .filter(item => item.day === day && item.month === month && item.year === year)
+                                    .map((item, idx) => (
+                                        <div
+                                            key={idx}
+                                            className={`text-[11px] px-2 py-1 rounded-md font-semibold border shadow-sm truncate transition-transform hover:scale-[1.02] 
+                                            ${item.eventType === 'note' ? 'bg-orange-600 border-orange-300' : 'bg-green-600 border-green-300'} 
+                                            ${isHighlighted ? 'animate-pulse' : ''} text-white`}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );
