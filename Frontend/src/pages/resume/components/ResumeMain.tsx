@@ -35,10 +35,6 @@ const ResumeMain = () => {
   return (
     <div className="min-h-screen bg-black text-white pt-32 pb-20 font-sans relative">
       
-      {/* Brand Logo - Top Left */}
-      <div className="absolute top-10 left-12">
-        <img src={logo} alt="educAIte" className="h-10" />
-      </div>
 
       <div className="max-w-7xl mx-auto px-12 flex flex-col items-center">
         

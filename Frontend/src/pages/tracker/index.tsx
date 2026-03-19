@@ -3,7 +3,6 @@ import Header from './components/Header'
 import DropdownSemester from './components/DropdownSemester'
 import Table from './components/Table'
 
-
 //all data here
 //stud name
 const name: string = "Christian"
@@ -25,141 +24,44 @@ const data = [
     {
         semester: Semester.FIRST_YEAR_FIRST_SEM,
         courses: [
-            {
-                course: 'ENTREP',
-                units: 3,
-                midtermGrade: 1.2,
-                finalGrade: 1.1
-            },
-            {
-                course: 'PE 1',
-                units: 3,
-                midtermGrade: 1.1,
-                finalGrade: 1.2
-            },
-            {
-                course: 'ENGL 1',
-                units: 4,
-                midtermGrade: 1.1,
-                finalGrade: 1.0
-            },
-            {
-                course: 'PHILO',
-                units: 4,
-                midtermGrade: 1.1,
-                finalGrade: 1.0
-            }
+            { course: 'ENTREP', units: 3, midtermGrade: 1.2, finalGrade: 1.1 },
+            { course: 'PE 1', units: 3, midtermGrade: 1.1, finalGrade: 1.2 },
+            { course: 'ENGL 1', units: 4, midtermGrade: 1.1, finalGrade: 1.0 },
+            { course: 'PHILO', units: 4, midtermGrade: 1.1, finalGrade: 1.0 }
         ]
     },
     {
         semester: Semester.FIRST_YEAR_SECOND_SEM,
         courses: [
-            {
-                course: 'COMPUTING',
-                units: 3,
-                midtermGrade: 1.2,
-                finalGrade: 1.2
-            },
-            {
-                course: 'PE 2',
-                units: 3,
-                midtermGrade: 1.5,
-                finalGrade: 1.75
-            },
-            {
-                course: 'NSTP 2',
-                units: 4,
-                midtermGrade: 2.5,
-                finalGrade: 1.2
-            },
-            {
-                course: 'DIFF CALC',
-                units: 4,
-                midtermGrade: 2.1,
-                finalGrade: 2.1
-            }
+            { course: 'COMPUTING', units: 3, midtermGrade: 1.2, finalGrade: 1.2 },
+            { course: 'PE 2', units: 3, midtermGrade: 1.5, finalGrade: 1.75 },
+            { course: 'NSTP 2', units: 4, midtermGrade: 2.5, finalGrade: 1.2 },
+            { course: 'DIFF CALC', units: 4, midtermGrade: 2.1, finalGrade: 2.1 }
         ]
     },
     {
         semester: Semester.SECOND_YEAR_FIRST_SEM,
         courses: [
-            {
-                course: 'INTRO TO PROGRAMMING',
-                units: 3,
-                midtermGrade: 1.5,
-                finalGrade: 1.5
-            },
-            {
-                course: 'PE 3',
-                units: 3,
-                midtermGrade: 1.1,
-                finalGrade: 1.1
-            },
-            {
-                course: 'RIZAL',
-                units: 4,
-                midtermGrade: 2.3,
-                finalGrade: 2.5
-            },
-            {
-                course: 'DATABASE',
-                units: 4,
-                midtermGrade: 2.1,
-                finalGrade: 2.0
-            }
+            { course: 'INTRO TO PROGRAMMING', units: 3, midtermGrade: 1.5, finalGrade: 1.5 },
+            { course: 'PE 3', units: 3, midtermGrade: 1.1, finalGrade: 1.1 },
+            { course: 'RIZAL', units: 4, midtermGrade: 2.3, finalGrade: 2.5 },
+            { course: 'DATABASE', units: 4, midtermGrade: 2.1, finalGrade: 2.0 }
         ]
     },
     {
         semester: Semester.SECOND_YEAR_SECOND_SEM,
         courses: [
-            {
-                course: 'LIT',
-                units: 3,
-                midtermGrade: 2.2,
-                finalGrade: 1.8
-            },
-            {
-                course: 'PE 4',
-                units: 3,
-                midtermGrade: 1.9,
-                finalGrade: 2.1
-            },
-            {
-                course: 'HIST 1',
-                units: 4,
-                midtermGrade: 1.5,
-                finalGrade: 1.5
-            },
-            {
-                course: 'HUM',
-                units: 4,
-                midtermGrade: 2.1,
-                finalGrade: 1.2
-            }
+            { course: 'LIT', units: 3, midtermGrade: 2.2, finalGrade: 1.8 },
+            { course: 'PE 4', units: 3, midtermGrade: 1.9, finalGrade: 2.1 },
+            { course: 'HIST 1', units: 4, midtermGrade: 1.5, finalGrade: 1.5 },
+            { course: 'HUM', units: 4, midtermGrade: 2.1, finalGrade: 1.2 }
         ]
     },
-    {
-        semester: Semester.THIRD_YEAR_FIRST_SEM,
-        courses: [
-        ]
-    },
-    {
-        semester: Semester.THIRD_YEAR_SECOND_SEM,
-        courses: [
-        ]
-    },
-    {
-        semester: Semester.FOURTH_YEAR_FIRST_SEM,
-        courses: [
-        ]
-    },
-    {
-        semester: Semester.FOURTH_YEAR_SECOND_SEM,
-        courses: [
-        ]
-    }
+    { semester: Semester.THIRD_YEAR_FIRST_SEM, courses: [] },
+    { semester: Semester.THIRD_YEAR_SECOND_SEM, courses: [] },
+    { semester: Semester.FOURTH_YEAR_FIRST_SEM, courses: [] },
+    { semester: Semester.FOURTH_YEAR_SECOND_SEM, courses: [] }
 ];
-
 
 const Tracker: React.FC = () => {
     const [currentSem, setCurrentSem] = useState<string>(Semester.FIRST_YEAR_FIRST_SEM);
@@ -169,25 +71,31 @@ const Tracker: React.FC = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-6">
+        // Added standard page padding (pt-32) so it clears the global Navbar
+        <div className="min-h-screen bg-black text-white font-sans antialiased pt-32 pb-24 px-6 relative z-10">
+            <div className="max-w-[1280px] mx-auto">
+                
+                {/* Header and Dropdown Container */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 w-full">
+                    
+                    <Header name={name} semester={currentSem} />
 
-            <div className="flex flex-row justify-between items-end mb-10">
-                <Header name={name} semester={currentSem} />
-
-                <div className="shrink-0">
-                    <DropdownSemester
-                        selections={Object.values(Semester)}
-                        onSelectChange={handleSemSelection}
-                    />
+                    <div className="shrink-0 relative z-20 w-full md:w-auto">
+                        <DropdownSemester
+                            selections={Object.values(Semester)}
+                            // CHANGED: Pass the current selection down to the component
+                            currentSelection={currentSem} 
+                            onSelectChange={handleSemSelection}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="mt-8 bg-black border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-                <Table data={data.filter(s => s.semester === currentSem)[0].courses} />
+                {/* Table Container */}
+                <Table data={data.filter(s => s.semester === currentSem)[0]?.courses || []} />
+                
             </div>
         </div>
     );
 }
 
-
-export default Tracker
+export default Tracker;
