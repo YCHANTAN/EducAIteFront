@@ -12,7 +12,7 @@ const carouselItems = [
 
 const FeatureCarousel = () => {
   return (
-    <div className="relative w-full min-h-screen flex flex-col justify-center overflow-hidden bg-black antialiased">
+    <div id="features" className="relative w-full min-h-screen flex flex-col justify-center overflow-hidden bg-black antialiased">
       
       {/* --- FULL PAGE ZOOMED EARTH BACKGROUND --- */}
       {/* inset-0 makes it fill the whole screen. 
