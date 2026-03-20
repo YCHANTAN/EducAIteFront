@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BentoCards: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-[1200px] relative z-10">
       
@@ -30,7 +32,12 @@ const BentoCards: React.FC = () => {
             <span className="text-[#00CEC8] text-lg font-medium">Upcoming Tasks</span>
             <span className="text-xl">📅</span>
           </div>
-          <button className="bg-white text-black rounded-lg px-3 py-1 text-[10px] font-bold">Open Calendar</button>
+          <button 
+            onClick={() => navigate('/calendar')}
+            className="bg-white text-black rounded-lg px-3 py-1 text-[10px] font-bold hover:scale-105 active:scale-95 transition-transform"
+          >
+            Open Calendar
+          </button>
         </div>
         <p className="text-white mb-4">You have <span className="font-bold">2</span> Deadlines this week</p>
         <div className="space-y-3 text-xs">
@@ -92,7 +99,12 @@ const BentoCards: React.FC = () => {
         <p className="text-white text-lg mb-6">
           <span className="font-bold">2</span> new certifications added this semester
         </p>
-        <button className="bg-white text-black rounded-lg px-4 py-1.5 text-xs font-bold">Edit Resume</button>
+        <button 
+          onClick={() => navigate('/resume')}
+          className="bg-white text-black rounded-lg px-4 py-1.5 text-xs font-bold hover:scale-105 active:scale-95 transition-transform"
+        >
+          Edit Resume
+        </button>
       </div>
 
     </div>
