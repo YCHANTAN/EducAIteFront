@@ -10,7 +10,7 @@ const images = [
 
 const Developers = () => {
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent antialiased pt-[20vh] pb-[10vh]">
+    <div id="about" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent antialiased pt-[20vh] pb-[10vh]">
       
       {/* --- HEADER TEXT BOX --- */}
       {/* Matches the exact styling and viewport positioning of the FeatureCarousel header */}

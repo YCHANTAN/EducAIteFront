@@ -11,7 +11,7 @@ const InfoIcon = () => (
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black text-white px-8 md:px-[10vw] py-20 antialiased z-50 relative">
+    <footer id="contact" className="w-full bg-black text-white px-8 md:px-[10vw] py-20 antialiased z-50 relative">
       
       {/* --- TOP SECTION: FEATURES --- */}
       <div className="flex flex-col gap-12">

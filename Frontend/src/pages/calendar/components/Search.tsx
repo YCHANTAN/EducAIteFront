@@ -41,28 +41,36 @@ const Search = ({ events, onResultClick }: Props) => {
 
     const handleSelect = (date: string) => {
         onResultClick(date);
-        //clear the search input
         setQuery('');
         setShowDropdown(false);
     };
 
     return (
         <div className="relative" ref={dropdownRef}>
-            <div className="flex items-center bg-black p-4 rounded-lg">
-                <div className="flex items-center border border-white rounded-full bg-black">
-                    <div className="text-white mr-2 ml-3">🔎</div>
-                    <input
-                        type="text"
-                        placeholder="Search events..."
-                        value={query}
-                        onChange={(e) => {
-                            setQuery(e.target.value);
-                            setShowDropdown(true);
-                        }}
-                        onFocus={() => setShowDropdown(true)}
-                        className="bg-black text-white outline-none border-none rounded-full p-2 w-48 lg:w-64"
-                    />
+            <div className="flex items-center bg-black border-[1.5px] border-white/20 rounded-full w-full md:w-[350px] lg:w-[400px] pl-5 pr-1.5 py-1.5 transition-colors focus-within:border-[#00CEC8] shadow-[0_0_15px_rgba(255,255,255,0.03)]">
+                {/* Search Icon */}
+                <div className="text-white mr-3 shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.3-4.3"/>
+                    </svg>
                 </div>
+                
+                <input
+                    type="text"
+                    placeholder="Search events..."
+                    value={query}
+                    onChange={(e) => {
+                        setQuery(e.target.value);
+                        setShowDropdown(true);
+                    }}
+                    onFocus={() => setShowDropdown(true)}
+                    className="bg-transparent border-none outline-none text-white w-full text-[1.05rem] placeholder:text-white/40"
+                />
+                
+                <button className="bg-white text-black font-semibold text-sm px-7 py-2.5 rounded-full hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all shrink-0">
+                    Search
+                </button>
             </div>
 
             {showDropdown && query && (

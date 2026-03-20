@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 interface Props {
     events: any[],
     month: number,
@@ -8,16 +7,15 @@ interface Props {
     highlightedDate?: string | null
 }
 
-
 const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
     const highlightParts = highlightedDate ? highlightedDate.split('-').map(Number) : null;
     const hYear = highlightParts ? highlightParts[0] : null;
-    const hMonth = highlightParts ? highlightParts[1] - 1 : null; // 0-indexed
+    const hMonth = highlightParts ? highlightParts[1] - 1 : null;
     const hDay = highlightParts ? highlightParts[2] : null;
 
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     const items = events.map(item => {
         const [y, m, d] = item.date.split('-');
@@ -29,33 +27,35 @@ const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
         };
     });
 
-    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    // Start on Monday
+    let firstDayOfMonth = new Date(year, month, 1).getDay() - 1;
+    if (firstDayOfMonth === -1) firstDayOfMonth = 6; 
 
     return (
-        <div className="bg-black rounded-2xl shadow-md border border-gray-700 overflow-hidden">
-            <div className="grid grid-cols-7 border-b border-gray-700 bg-gray-800">
-                {weekDays.map(day => (
-                    <div key={day} className="py-4 text-center text-xs font-bold text-white uppercase tracking-widest">
+        <div className="bg-[#111111] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] border-[1.5px] border-white/20 overflow-hidden w-full">
+            <div className="grid grid-cols-7 border-b-[1.5px] border-white/20 bg-black/50">
+                {weekDays.map((day, i) => (
+                    <div key={day} className={`py-4 text-center text-[0.8rem] font-bold text-white/50 uppercase tracking-widest ${i < 6 ? 'border-r-[1.5px] border-white/20' : ''}`}>
                         {day}
                     </div>
                 ))}
             </div>
 
-            <div className="grid grid-cols-7 auto-rows-[130px]">
+            <div className="grid grid-cols-7 auto-rows-[120px] md:auto-rows-[140px]">
                 {[...Array(firstDayOfMonth)].map((_, i) => (
-                    <div key={`empty-${i}`} className="border-r border-b border-gray-700 bg-gray-800" />
+                    <div key={`empty-${i}`} className="border-r-[1.5px] border-b-[1.5px] border-white/20 bg-[#1A1A1A]/50" />
                 ))}
 
                 {days.map(day => {
                     const isHighlighted = hYear === year && hMonth === month && hDay === day;
 
                     return (
-                        <div key={day}
-                            className={`border-r border-b border-gray-700 p-2 transition-all duration-500 group cursor-pointer relative
-                             ${isHighlighted ? 'bg-indigo-900/40 ring-2 ring-inset ring-indigo-500 z-10' : 'hover:bg-gray-700'}`}>
+                        <div key={day} 
+                            className={`border-r-[1.5px] border-b-[1.5px] border-white/20 p-2 transition-all group cursor-pointer relative flex flex-col
+                             ${isHighlighted ? 'bg-[#00CEC8]/20 ring-2 ring-inset ring-[#00CEC8] z-10' : 'hover:bg-[#00CEC8]/10'}`}>
 
-                            <span className={`text-sm font-bold transition-colors 
-                                ${isHighlighted ? 'text-indigo-300' : 'text-white group-hover:text-indigo-400'}`}>
+                            <span className={`text-sm font-bold transition-colors p-1
+                                ${isHighlighted ? 'text-[#00CEC8]' : 'text-white/80 group-hover:text-[#00CEC8]'}`}>
                                 {day}
                             </span>
 
@@ -65,9 +65,9 @@ const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
                                     .map((item, idx) => (
                                         <div
                                             key={idx}
-                                            className={`text-[11px] px-2 py-1 rounded-md font-semibold border shadow-sm truncate transition-transform hover:scale-[1.02] 
-                                            ${item.eventType === 'note' ? 'bg-orange-600 border-orange-300' : 'bg-green-600 border-green-300'} 
-                                            ${isHighlighted ? 'animate-pulse' : ''} text-white`}
+                                            className={`text-[10px] md:text-[11px] px-2 py-1.5 rounded-md font-bold border truncate transition-transform hover:scale-[1.02] 
+                                            ${item.eventType === 'note' ? 'bg-white/10 text-white border-white/20' : 'bg-[#00CEC8]/15 text-[#00CEC8] border-[#00CEC8]/30'} 
+                                            ${isHighlighted ? 'animate-pulse' : ''}`}
                                         >
                                             {item.title}
                                         </div>
@@ -80,6 +80,5 @@ const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
         </div>
     );
 };
-
 
 export default MainCalendar;
