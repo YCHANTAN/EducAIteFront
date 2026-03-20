@@ -4,9 +4,10 @@ import CreateFolder from '../modal/CreateFolder'
 
 interface CreateMenuProps {
   onClose: () => void;
+  onFolderCreated: (folderName: string) => void;
 }
 
-const CreateMenu = ({ onClose }: CreateMenuProps) => {
+const CreateMenu: React.FC<CreateMenuProps> = ({ onClose, onFolderCreated }) => {
   const navigate = useNavigate();
   const [showFolderModal, setShowFolderModal] = useState(false);
 
@@ -66,7 +67,7 @@ const CreateMenu = ({ onClose }: CreateMenuProps) => {
         isOpen={showFolderModal} 
         onClose={() => setShowFolderModal(false)}
         onCreate={(folderName) => {
-          console.log("Folder created:", folderName);
+          onFolderCreated(folderName); 
           setShowFolderModal(false); 
           onClose(); 
         }}

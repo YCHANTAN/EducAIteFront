@@ -144,4 +144,4 @@ const EducAIteAssistantRobot: React.FC = () => {
     );
 };
 
-export default EducAIteAssistantRobot;
+export default EducAIteAssistantRobot; 

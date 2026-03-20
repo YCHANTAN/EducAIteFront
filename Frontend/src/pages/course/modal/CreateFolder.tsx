@@ -53,8 +53,8 @@ const CreateFolder = ({ isOpen, onClose, onCreate }: CreateFolderProps) => {
            <button 
               onClick={() => {
                 if (folderName.trim()) {
-                  onCreate(folderName);
-                  setFolderName(""); // Clear the input
+                  onCreate(folderName); // Triggers the chain reaction
+                  setFolderName(""); 
                 }
               }}
               className="bg-white text-black font-bold text-sm px-24 py-3.5 rounded-full shadow-[0_10px_40px_-10px_rgba(255,255,255,0.7)] hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.9)] hover:scale-105 transition-all duration-300"
