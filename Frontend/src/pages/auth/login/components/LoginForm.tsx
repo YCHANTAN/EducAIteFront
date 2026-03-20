@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // 1. IMPORT useNavigate
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom'; 
 import seePass from '../../../../assets/see-pass.svg';
 import hidePass from '../../../../assets/hide-pass.svg';
 
@@ -87,9 +87,12 @@ const LoginForm: React.FC = () => {
 
         {/* Forgot Password */}
         <div className="text-center mt-2">
-          <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">
+          <Link 
+            to="/auth/forgot" 
+            className="text-sm text-white/70 hover:text-white transition-colors"
+          >
             Forgot password?
-          </a>
+          </Link>
         </div>
       </form>
     </div>

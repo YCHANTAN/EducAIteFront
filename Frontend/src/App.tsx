@@ -17,6 +17,7 @@ import SettingsPage from './pages/settings'
 import CreateNotes from './pages/course/component/CreateNotes'
 import Login from './pages/auth/login'
 import Register from './pages/auth/register'
+import ForgotPasswordPage from './pages/auth/forgot'
 import Calender from './pages/calendar'
 
 function AppContent() {
@@ -26,6 +27,7 @@ function AppContent() {
     location.pathname === '/' ||
     location.pathname === '/login' ||
     location.pathname === '/register' ||
+    location.pathname === '/forgot' ||
     location.pathname.startsWith('/auth')
 
   return (
@@ -57,6 +59,7 @@ function AppContent() {
         
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot" element={<ForgotPasswordPage />} />
 
           {/* optional */}
           <Route path="/auth/login" element={<Login />} />
