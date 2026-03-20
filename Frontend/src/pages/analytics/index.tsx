@@ -7,6 +7,7 @@ import ActivityHeatmap from './components/ActivityHeatmap'
 import LearningTrendAnalysis from './components/LearningTrendAnalysis'
 import BestPerformingCourse from './components/BestPerformingCourse'
 import MultiLineChartCard from './components/MultiLineChartCard'
+import Logo from '../../components/Logo';
 
 const AnalyticsPage = () => {
   return (
@@ -14,7 +15,7 @@ const AnalyticsPage = () => {
     <div className="min-h-screen bg-black text-white pt-32 pb-20 px-8 font-sans">
       
       <div className="max-w-[1400px] mx-auto flex flex-col gap-8">
-        
+        <Logo />
         {/* Top Header */}
         <AnalyticsHeader />
 

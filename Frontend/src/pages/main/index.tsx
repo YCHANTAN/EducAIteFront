@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../../components/Navbar'; 
 import EarthBg from '../../assets/earthbg.svg'; 
 import robotImg from '../../assets/robot.svg'; 
+import Logo from '../../components/Logo';
 
 import DashboardHeader from './components/DashboardHeader';
 import BentoCards from './components/BentoCards';
@@ -10,6 +11,7 @@ const MainPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-black text-white font-sans relative overflow-x-hidden antialiased pb-20">
       
+      <Logo />
       {/* 1. Global Navbar */}
       <Navbar />
 
