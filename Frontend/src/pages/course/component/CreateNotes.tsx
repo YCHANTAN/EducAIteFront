@@ -4,7 +4,8 @@ import logo from '../../../assets/educAIte-logo.svg'
 
 const CreateNotes = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("Untitled");
+  // CHANGED: Set initial state to empty string so the placeholder takes over
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   return (
