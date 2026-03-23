@@ -1,16 +1,17 @@
 import React from 'react';
-import Navbar from '../../components/Navbar'; // IMPORTANT: Call global Navbar
+import Navbar from '../../components/Navbar'; 
 
 import SettingsHeader from './components/SettingsHeader';
 import ProfileForm from './components/ProfileForm';
 import SchoolSecurityForm from './components/SchoolSecurityForm';
- // Reuse robot from dashboard
+import Logo from '../../components/Logo';
+ 
 
 const SettingsPage: React.FC = () => {
   return (
     // PURE BLACK BACKGROUND - No Earth background, noBlur effect
     <div className="min-h-screen bg-black text-white font-sans relative overflow-x-hidden antialiased pb-20">
-      
+      <Logo />
       {/* 1. Global Navbar stays fixed at the top */}
       <Navbar />
 

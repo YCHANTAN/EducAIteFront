@@ -88,7 +88,7 @@ const LoginForm: React.FC = () => {
         {/* Forgot Password */}
         <div className="text-center mt-2">
           <Link 
-            to="/auth/forgot" 
+            to="/forgot" 
             className="text-sm text-white/70 hover:text-white transition-colors"
           >
             Forgot password?

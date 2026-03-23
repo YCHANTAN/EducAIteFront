@@ -6,6 +6,7 @@ import Search from './components/Search';
 import SecondaryCalendar from './components/SecondaryCalendar';
 import AddEventDialog from './components/AddEventDialog';
 import MonthYearSelector from './components/MonthYearSelector';
+import Logo from '../../components/Logo';
 
 interface Event {
     date: string,
@@ -52,6 +53,7 @@ const Calendar: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-black text-white font-sans antialiased pt-32 pb-12 px-6 relative z-10">
+            <Logo />
             <div className="max-w-[1400px] mx-auto">
                 
                 {/* Header Row */}

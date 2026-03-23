@@ -16,14 +16,55 @@ const CourseDetails = () => {
   // Overlay States
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
-  const [activeMenuIndex, setActiveMenuIndex] = useState<number | null>(null);
+  
+  const [activeMenuFile, setActiveMenuFile] = useState<string | null>(null);
 
   const selectedCourse = courses.find(course => course.id === id);
+
+  // --- DYNAMIC STATE ---
+  const [files, setFiles] = useState([
+    { name: "Course Image", icon: "folder", size: "10 mb", dateCreated: "Sept 7, 2025" },
+    { name: "Chapter 1 Introduction", icon: "pdf", size: "163 kb", dateCreated: "Sept 7, 2025" },
+    { name: "Syllabus", icon: "presentation", size: "102 mb", dateCreated: "Sept 7, 2025" },
+    { name: "My notes", icon: "notes", size: "10 mb", dateCreated: "Sept 7, 2025" },
+    { name: "Reference Materials", icon: "folder", size: "10 mb", dateCreated: "Sept 7, 2025" },
+    { name: "Assignment 1", icon: "pdf", size: "2.4 mb", dateCreated: "Sept 7, 2025" },
+    { name: "Lecture Video", icon: "folder", size: "450 mb", dateCreated: "Sept 7, 2025" },
+  ]);
+
+  // --- SEARCH STATE ---
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // --- FILTERED FILES (Derived State) ---
+  const filteredFiles = files.filter(file => 
+    file.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // --- FUNCTION: Add a new folder ---
+  const handleAddFolder = (folderName: string) => {
+    const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const newFolder = {
+      name: folderName,
+      icon: "folder",
+      size: "--", 
+      dateCreated: today
+    };
+    
+    setFiles(prevFiles => [newFolder, ...prevFiles]);
+    setIsCreateMenuOpen(false); 
+  };
+
+  // --- FUNCTION: Delete a file/folder ---
+  // CHANGED: Now deletes based on the file's name to prevent bugs when searching
+  const handleDeleteFile = (fileNameToDelete: string) => {
+    setFiles(prevFiles => prevFiles.filter(file => file.name !== fileNameToDelete));
+    setActiveMenuFile(null); // Close the menu after deleting
+  };
 
   // Close menus on Scroll to keep UI clean
   useEffect(() => {
     const handleScroll = () => {
-      setActiveMenuIndex(null);
+      setActiveMenuFile(null);
       setIsCreateMenuOpen(false);
     };
     window.addEventListener('scroll', handleScroll);
@@ -38,16 +79,6 @@ const CourseDetails = () => {
       </div>
     );
   }
-
-  const mockFiles = [
-    { name: "Course Image", icon: "folder", size: "10 mb" },
-    { name: "Chapter 1 Introduction", icon: "pdf", size: "163 kb" },
-    { name: "Syllabus", icon: "presentation", size: "102 mb" },
-    { name: "My notes", icon: "notes", size: "10 mb" },
-    { name: "Reference Materials", icon: "folder", size: "10 mb" },
-    { name: "Assignment 1", icon: "pdf", size: "2.4 mb" },
-    { name: "Lecture Video", icon: "folder", size: "450 mb" },
-  ];
 
   return (
     <>
@@ -95,7 +126,8 @@ const CourseDetails = () => {
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 5v14M5 12h14"/></svg>
                   Create
                 </button>
-                {isCreateMenuOpen && <CreateMenu onClose={() => setIsCreateMenuOpen(false)} />}
+                {/* Linked to handleAddFolder */}
+                {isCreateMenuOpen && <CreateMenu onClose={() => setIsCreateMenuOpen(false)} onFolderCreated={handleAddFolder} />}
               </div>
             </div>
           </div>
@@ -107,6 +139,8 @@ const CourseDetails = () => {
               <div className="relative flex-1">
                 <input 
                   type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search" 
                   className="w-full bg-black border border-white/20 rounded-full py-3 pl-12 pr-4 focus:border-[#00CEC8] outline-none transition-all"
                 />
@@ -120,9 +154,18 @@ const CourseDetails = () => {
 
         {/* Files Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {mockFiles.map((file, index) => (
+          
+          {/* Empty State when search finds nothing */}
+          {filteredFiles.length === 0 && (
+            <div className="col-span-full py-12 text-center text-white/40">
+              <p className="text-lg">No files found matching "{searchQuery}"</p>
+            </div>
+          )}
+
+          {/* Mapping over the filteredFiles state */}
+          {filteredFiles.map((file, index) => (
             <div 
-              key={index} 
+              key={`${file.name}-${index}`} 
               className="bg-[#050505] border border-white/10 rounded-[24px] p-6 hover:border-[#00CEC8]/100 transition-all group relative cursor-pointer"
             >
               {/* THREE DOTS ACTION MENU */}
@@ -130,20 +173,22 @@ const CourseDetails = () => {
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
-                    setActiveMenuIndex(activeMenuIndex === index ? null : index);
+                    // Toggle by file name
+                    setActiveMenuFile(activeMenuFile === file.name ? null : file.name);
                   }}
-                  className={`p-1 rounded-full transition-colors ${activeMenuIndex === index ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white'}`}
+                  className={`p-1 rounded-full transition-colors ${activeMenuFile === file.name ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white'}`}
                 >
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>
                   </svg>
                 </button>
 
-                {activeMenuIndex === index && (
+                {activeMenuFile === file.name && (
                   <FileActionMenu 
-                    onClose={() => setActiveMenuIndex(null)}
+                    onClose={() => setActiveMenuFile(null)}
                     onDownload={() => console.log('Download', file.name)}
-                    onDelete={() => console.log('Delete', file.name)}
+                    // Pass the file name to the delete function
+                    onDelete={() => handleDeleteFile(file.name)}
                   />
                 )}
               </div>
@@ -160,7 +205,7 @@ const CourseDetails = () => {
                
                <div className="space-y-1 text-[10px] text-white/40 font-bold uppercase tracking-widest">
                  <p>Size: <span className="text-white/80">{file.size}</span></p>
-                 <p>Last Created: <span className="text-white/80">Sept 7, 2025</span></p>
+                 <p>Last Created: <span className="text-white/80">{file.dateCreated}</span></p>
                </div>
             </div>
           ))}

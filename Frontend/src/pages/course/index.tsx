@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import CourseCard from './component/CourseCard'
 import { SemesterDropdown } from './component/component'
 import UploadModal from './component/UploadModal'
+import Logo from '../../components/Logo';
 
 import { courses } from '../../data/courses'
 
@@ -38,7 +39,7 @@ const CoursePage = () => {
   return (
     <>
       <div className="min-h-screen bg-black text-white pt-32 pb-12 px-8 lg:px-16 font-sans relative overflow-x-hidden antialiased">
-
+        <Logo />
         {/* SEMESTER DROPDOWN: Positioned right above the cards */}
         <div className="flex justify-end mb-8 relative z-20 w-full max-w-[1600px] mx-auto">
           <SemesterDropdown />
