@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import EducAIteAssistantRobot from './components/EducAIteAssistantRobot'
-import Logo from './components/Logo'
 
 import LandingPage from "./pages/landing";
 import Main from './pages/main'
@@ -34,7 +33,6 @@ function AppContent() {
     <div className="min-h-screen bg-black text-white font-sans antialiased">
       {!hideNavbar && (
         <>
-          <Logo />
           <Navbar />
           <EducAIteAssistantRobot />
         </>
@@ -54,16 +52,10 @@ function AppContent() {
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/calendar" element={<Calender />} />
-
-
         
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<ForgotPasswordPage />} />
-
-          {/* optional */}
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
         </Routes>
       </main>
     </div>

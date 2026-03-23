@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import pdfIcon from '../../../assets/pdf-logo.svg' 
 import wordIcon from '../../../assets/word-logo.svg'
 import pptIcon from '../../../assets/ppt-logo.svg'
@@ -8,6 +8,22 @@ interface ImportFileModalProps {
 }
 
 const ImportFileModal = ({ onClose }: ImportFileModalProps) => {
+  // Create a reference to attach to our hidden file input
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Function to trigger the click on the hidden input
+    const handleDivClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    // Function to handle what happens when a file is actually selected
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+        if (files && files.length > 0) {
+            console.log("File selected:", files[0].name);
+            // You can eventually add your upload logic here!
+        }
+    };
   return (
     <div 
       className="fixed inset-0 bg-black/60 backdrop-blur-md z-[150] flex items-center justify-center p-4"
@@ -30,9 +46,22 @@ const ImportFileModal = ({ onClose }: ImportFileModalProps) => {
         <h2 className="text-white text-xl font-bold text-center mb-10">Import file</h2>
 
         {/* Drag & Drop Zone */}
-        <div className="border-2 border-dashed border-white/10 rounded-[24px] p-12 flex flex-col items-center gap-6 mb-8 group hover:border-[#00CEC8]/40 transition-all cursor-pointer bg-white/[0.02]">
+        {/* --- ADDED onClick={handleDivClick} TO YOUR DIV --- */}
+        <div 
+            onClick={handleDivClick}
+            className="border-2 border-dashed border-white/10 rounded-[24px] p-12 flex flex-col items-center gap-6 mb-8 group hover:border-[#00CEC8]/40 transition-all cursor-pointer bg-white/[0.02]"
+        >
+            {/* --- THE HIDDEN FILE INPUT --- */}
+            <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleFileChange} 
+                className="hidden" 
+                multiple // Remove this if you only want them to select one file at a time
+                accept=".pdf,.doc,.docx,.ppt,.pptx" // Optional: restrict file types
+            />
   
-        {/* REPLACED PLACEHOLDERS WITH ACTUAL ASSET IMAGES */}
+            {/* REPLACED PLACEHOLDERS WITH ACTUAL ASSET IMAGES */}
             <div className="flex gap-6 items-center">
                 <img src={pdfIcon} alt="PDF" className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300" />
                 <img src={wordIcon} alt="Word" className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300" />

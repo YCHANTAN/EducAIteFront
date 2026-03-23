@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Header from './components/Header'
 import DropdownSemester from './components/DropdownSemester'
 import Table from './components/Table'
-
+import Logo from '../../components/Logo';
 //all data here
 //stud name
 const name: string = "Christian"
@@ -73,6 +73,7 @@ const Tracker: React.FC = () => {
     return (
         // Added standard page padding (pt-32) so it clears the global Navbar
         <div className="min-h-screen bg-black text-white font-sans antialiased pt-32 pb-24 px-6 relative z-10">
+            <Logo />
             <div className="max-w-[1280px] mx-auto">
                 
                 {/* Header and Dropdown Container */}
