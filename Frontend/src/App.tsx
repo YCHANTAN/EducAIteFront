@@ -47,7 +47,7 @@ function AppContent() {
           <Route path="/courses/:id" element={<CourseDetails />} />
           <Route path="/create-notes" element={<CreateNotes />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/flashcards" element={<FlashcardsPage />} />
+          <Route path="/flashcards/*" element={<FlashcardsPage />} />
           <Route path="/tracker" element={<TrackerPage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/settings" element={<SettingsPage />} />
