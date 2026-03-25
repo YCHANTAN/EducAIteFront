@@ -41,6 +41,7 @@ const MonthYearSelector = ({ month, year, onDateChange }: Props) => {
                 value={inputValue}
                 onChange={handleChange}
                 // THIS IS THE FIX: Forces the calendar to pop up when clicking anywhere on the element
+                //todo: fix for firefox/safari
                 onClick={(e) => {
                     if ('showPicker' in HTMLInputElement.prototype) {
                         try {

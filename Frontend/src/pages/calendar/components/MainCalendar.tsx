@@ -3,29 +3,32 @@ import React from 'react';
 interface Props {
     events: any[],
     month: number,
-    year: number
+    year: number,
+    highlightedDate?: string | null
 }
 
-const MainCalendar = ({ events, month, year }: Props) => {
-    const currentMonth = month
-    const currentYear = year
+const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
+    const highlightParts = highlightedDate ? highlightedDate.split('-').map(Number) : null;
+    const hYear = highlightParts ? highlightParts[0] : null;
+    const hMonth = highlightParts ? highlightParts[1] - 1 : null;
+    const hDay = highlightParts ? highlightParts[2] : null;
 
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     const items = events.map(item => {
-        const [year, month, day] = item.date.split('-');
+        const [y, m, d] = item.date.split('-');
         return {
             ...item,
-            day: Number(day),
-            month: Number(month) - 1, 
-            year: Number(year)
+            day: Number(d),
+            month: Number(m) - 1,
+            year: Number(y)
         };
     });
 
-    // Adjust to start on Monday instead of Sunday
-    let firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay() - 1;
+    // Start on Monday
+    let firstDayOfMonth = new Date(year, month, 1).getDay() - 1;
     if (firstDayOfMonth === -1) firstDayOfMonth = 6; 
 
     return (
@@ -43,33 +46,36 @@ const MainCalendar = ({ events, month, year }: Props) => {
                     <div key={`empty-${i}`} className="border-r-[1.5px] border-b-[1.5px] border-white/20 bg-[#1A1A1A]/50" />
                 ))}
 
-                {days.map(day => (
-                    // CHANGED: hover:bg-[#00CEC8]/10 gives that subtle teal hint on the background
-                    <div key={day} className="border-r-[1.5px] border-b-[1.5px] border-white/20 p-2 hover:bg-[#00CEC8]/10 transition-colors group cursor-pointer relative flex flex-col">
-                        
-                        {/* CHANGED: group-hover:text-[#00CEC8] makes the number itself turn teal */}
-                        <span className="text-sm font-bold text-white/80 group-hover:text-[#00CEC8] transition-colors p-1">
-                            {day}
-                        </span>
+                {days.map(day => {
+                    const isHighlighted = hYear === year && hMonth === month && hDay === day;
 
-                        <div className="mt-1 space-y-1.5 overflow-y-auto max-h-[90px] no-scrollbar">
-                            {items
-                                .filter(item => item.day === day && item.month === currentMonth && item.year === currentYear)
-                                .map((item, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`text-[10px] md:text-[11px] px-2 py-1.5 rounded-md font-bold border truncate transition-transform hover:scale-[1.02] ${
-                                            item.eventType === 'note'
-                                                ? 'bg-white/10 text-white border-white/20'
-                                                : 'bg-[#00CEC8]/15 text-[#00CEC8] border-[#00CEC8]/30'
-                                        }`}
-                                    >
-                                        {item.title}
-                                    </div>
-                                ))}
+                    return (
+                        <div key={day} 
+                            className={`border-r-[1.5px] border-b-[1.5px] border-white/20 p-2 transition-all group cursor-pointer relative flex flex-col
+                             ${isHighlighted ? 'bg-[#00CEC8]/20 ring-2 ring-inset ring-[#00CEC8] z-10' : 'hover:bg-[#00CEC8]/10'}`}>
+
+                            <span className={`text-sm font-bold transition-colors p-1
+                                ${isHighlighted ? 'text-[#00CEC8]' : 'text-white/80 group-hover:text-[#00CEC8]'}`}>
+                                {day}
+                            </span>
+
+                            <div className="mt-1 space-y-1.5 overflow-y-auto max-h-[90px] no-scrollbar">
+                                {items
+                                    .filter(item => item.day === day && item.month === month && item.year === year)
+                                    .map((item, idx) => (
+                                        <div
+                                            key={idx}
+                                            className={`text-[10px] md:text-[11px] px-2 py-1.5 rounded-md font-bold border truncate transition-transform hover:scale-[1.02] 
+                                            ${item.eventType === 'note' ? 'bg-white/10 text-white border-white/20' : 'bg-[#00CEC8]/15 text-[#00CEC8] border-[#00CEC8]/30'} 
+                                            ${isHighlighted ? 'animate-pulse' : ''}`}
+                                        >
+                                            {item.title}
+                                        </div>
+                                    ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );

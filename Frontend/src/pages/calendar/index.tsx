@@ -51,6 +51,21 @@ const Calendar: React.FC = () => {
         )
     }
 
+    const [highlightedDate, setHighlightedDate] = useState<string | null>(null);
+
+    const handleSearchResultClick = (dateString: string) => {
+        const [y, m, d] = dateString.split('-').map(Number);
+
+        setMonth(m - 1); 
+        setYear(y);
+        
+        setHighlightedDate(dateString);
+    
+        setTimeout(() => {
+            setHighlightedDate(null);
+        }, 3000);
+    };
+
     return (
         <div className="min-h-screen bg-black text-white font-sans antialiased pt-32 pb-12 px-6 relative z-10">
             <Logo />
@@ -59,7 +74,10 @@ const Calendar: React.FC = () => {
                 {/* Header Row */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
                     <h1 className="text-4xl md:text-[2.5rem] font-bold tracking-tight">Calendar</h1>
-                    <Search />
+                    <Search 
+                        events={events} 
+                        onResultClick={handleSearchResultClick} 
+                    />
                 </div>
 
                 {/* Main Content Split */}
@@ -74,7 +92,12 @@ const Calendar: React.FC = () => {
                                 onDateChange={handleDateChange}
                             />
                         </div>
-                        <MainCalendar events={events} month={currentMonth} year={currentYear} />
+                        <MainCalendar 
+                            events={events} 
+                            month={currentMonth} 
+                            year={currentYear} 
+                            highlightedDate={highlightedDate} 
+                        />
                     </div>
 
                     {/* Right Side: Sidebar */}
@@ -94,13 +117,11 @@ const Calendar: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Modal */}
                 <AddEventDialog
                     isOpen={dialogVisibility}
                     onClose={handleDialogClose}
                     onSave={handleEventSave}
                 />
-                
             </div>
         </div>
     );
