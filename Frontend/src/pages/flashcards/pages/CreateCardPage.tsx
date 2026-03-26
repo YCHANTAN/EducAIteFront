@@ -1,37 +1,75 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import logo from '../../../assets/educAIte-logo.svg';
+import { CardMenu } from '../components/CardMenu';
+
 export function CreateCardPage() {
+  const navigate = useNavigate();
+  const [activeSubdeck, setActiveSubdeck] = useState('Cards');
+
+  const subdecks = [
+    { name: 'Cards', count: 13, emoji: '🔥' },
+    { name: 'Subdeck 1', count: 0 },
+    { name: 'Subdeck 2', count: 0 },
+  ];
+
   return (
-    <div className="min-h-screen bg-black px-8 py-10 text-white">
-      <div className="mx-auto max-w-5xl">
-        <h1 className="mb-10 text-5xl font-semibold text-cyan-400">
-          Midterm exam for Database 🔥 13
-        </h1>
+    <div className="min-h-screen bg-black text-white font-sans antialiased flex flex-col">
+      {/* Navbar - Reusing your existing style */}
+      <header className="flex items-center gap-6 px-8 py-10 max-w-[1400px] mx-auto w-full z-20">
+        <button
+          onClick={() => navigate(-1)}
+          className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all bg-black/50 backdrop-blur-md"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <img src={logo} alt="educAIte" className="h-7 opacity-90" />
+      </header>
 
-        <h2 className="mb-6 text-4xl font-semibold">Cards</h2>
-
-        <div className="space-y-4">
-          <input
-            placeholder="Enter the front"
-            className="w-full rounded-[24px] border border-white/30 bg-transparent px-5 py-5 text-2xl outline-none"
-          />
-          <textarea
-            placeholder="Enter the back"
-            rows={4}
-            className="w-full rounded-[24px] border border-white/30 bg-transparent px-5 py-5 text-2xl outline-none"
-          />
-          <div className="flex items-center justify-between rounded-full border border-white/30 px-5 py-3">
-            <div className="flex gap-5 text-3xl text-white/80">
-              <span>🖼️</span>
-              <span>≣</span>
-              <span>☰</span>
-              <span>∑</span>
-            </div>
-            <button className="rounded-full bg-white px-10 py-3 font-medium text-black">
-              Save
-            </button>
-          </div>
+      <main className="flex-1 max-w-[1200px] mx-auto w-full px-8 pb-20">
+        {/* Title Section */}
+        <div className="mb-12">
+          <h1 className="text-[32px] md:text-[40px] font-medium tracking-tight text-white/90">
+            Midterm exam for Database
+          </h1>
+          <div className="h-[2px] w-24 bg-[#00CEC8]/60 mt-4 rounded-full"></div>
         </div>
-      </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-12">
+          {/* Sidebar / Subdecks */}
+          <aside className="space-y-2">
+            {subdecks.map((deck) => (
+              <button
+                key={deck.name}
+                onClick={() => setActiveSubdeck(deck.name)}
+                className={`w-full flex items-center justify-between px-6 py-4 rounded-2xl transition-all ${
+                  activeSubdeck === deck.name 
+                    ? 'bg-white/10 text-white border border-white/10 shadow-lg' 
+                    : 'text-white/40 hover:text-white/60'
+                }`}
+              >
+                <span className="text-lg font-medium">
+                  {deck.name} {deck.emoji}
+                </span>
+                <span className="text-sm font-mono">{deck.count}</span>
+              </button>
+            ))}
+            <button className="w-full flex items-center gap-3 px-6 py-4 text-[#00CEC8]/60 hover:text-[#00CEC8] transition-colors text-lg">
+              <span className="text-2xl">+</span> Add subdeck
+            </button>
+          </aside>
+
+          {/* Main Editor Area */}
+          <section className="space-y-8">
+            <h2 className="text-3xl font-medium text-white/90 mb-8">{activeSubdeck}</h2>
+            <CardMenu />
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
+
 export default CreateCardPage;

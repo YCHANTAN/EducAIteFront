@@ -18,6 +18,12 @@ import Login from './pages/auth/login'
 import Register from './pages/auth/register'
 import ForgotPasswordPage from './pages/auth/forgot'
 import Calender from './pages/calendar'
+import { CardsPage } from './pages/flashcards/pages/CardsPage'; 
+import { LearnPage } from './pages/flashcards/pages/LearnPage';
+import { CodeLearnPage } from './pages/flashcards/pages/CodeLearnPage';
+import { CodeChallengePage } from './pages/flashcards/pages/CodingChallengePage';
+import { PerformancePage } from './pages/flashcards/pages/PerformancePage';
+import { CreateCardPage } from './pages/flashcards/pages/CreateCardPage';
 
 function AppContent() {
   const location = useLocation()
@@ -47,12 +53,21 @@ function AppContent() {
           <Route path="/courses/:id" element={<CourseDetails />} />
           <Route path="/create-notes" element={<CreateNotes />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+
           <Route path="/flashcards/*" element={<FlashcardsPage />} />
+          <Route path="/cards" element={<CardsPage />} />
+          <Route path="/create-card" element={<CreateCardPage />} />
+          <Route path="/learn" element={<LearnPage />} />
+          <Route path="/code-learn" element={<CodeLearnPage />} />
+          <Route path="/code-challenge" element={<CodeChallengePage />} />
+          <Route path="/performance" element={<PerformancePage />} />
+
           <Route path="/tracker" element={<TrackerPage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/calendar" element={<Calender />} />
-        
+
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<ForgotPasswordPage />} />
