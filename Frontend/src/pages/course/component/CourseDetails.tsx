@@ -21,16 +21,25 @@ const CourseDetails = () => {
 
   const selectedCourse = courses.find(course => course.id === id);
 
-  // --- DYNAMIC STATE ---
-  const [files, setFiles] = useState([
-    { name: "Course Image", icon: "folder", size: "10 mb", dateCreated: "Sept 7, 2025" },
-    { name: "Chapter 1 Introduction", icon: "pdf", size: "163 kb", dateCreated: "Sept 7, 2025" },
-    { name: "Syllabus", icon: "presentation", size: "102 mb", dateCreated: "Sept 7, 2025" },
-    { name: "My notes", icon: "notes", size: "10 mb", dateCreated: "Sept 7, 2025" },
-    { name: "Reference Materials", icon: "folder", size: "10 mb", dateCreated: "Sept 7, 2025" },
-    { name: "Assignment 1", icon: "pdf", size: "2.4 mb", dateCreated: "Sept 7, 2025" },
-    { name: "Lecture Video", icon: "folder", size: "450 mb", dateCreated: "Sept 7, 2025" },
-  ]);
+  // --- DYNAMIC STATE (CHANGED: Now loads from localStorage!) ---
+  const [files, setFiles] = useState(() => {
+    // 1. Grab any custom files we saved from CreateNotes
+    const savedFiles = JSON.parse(localStorage.getItem('custom_course_files') || '[]');
+    
+    // 2. Define your default hardcoded files
+    const defaultFiles = [
+      { name: "Course Image", icon: "folder", size: "10 mb", dateCreated: "Sept 7, 2025" },
+      { name: "Chapter 1 Introduction", icon: "pdf", size: "163 kb", dateCreated: "Sept 7, 2025" },
+      { name: "Syllabus", icon: "presentation", size: "102 mb", dateCreated: "Sept 7, 2025" },
+      { name: "My notes", icon: "notes", size: "10 mb", dateCreated: "Sept 7, 2025" },
+      { name: "Reference Materials", icon: "folder", size: "10 mb", dateCreated: "Sept 7, 2025" },
+      { name: "Assignment 1", icon: "pdf", size: "2.4 mb", dateCreated: "Sept 7, 2025" },
+      { name: "Lecture Video", icon: "folder", size: "450 mb", dateCreated: "Sept 7, 2025" },
+    ];
+
+    // 3. Combine them! Saved files go first so they appear at the top.
+    return [...savedFiles, ...defaultFiles];
+  });
 
   // --- SEARCH STATE ---
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,8 +64,9 @@ const CourseDetails = () => {
   };
 
   // --- FUNCTION: Delete a file/folder ---
-  // CHANGED: Now deletes based on the file's name to prevent bugs when searching
   const handleDeleteFile = (fileNameToDelete: string) => {
+    // Note: If you want to permanently delete saved notes, you would also 
+    // update localStorage here. For now, it just removes it from the current view.
     setFiles(prevFiles => prevFiles.filter(file => file.name !== fileNameToDelete));
     setActiveMenuFile(null); // Close the menu after deleting
   };
