@@ -123,13 +123,6 @@ export function CardsPage() {
           onConfirm={handleConfirmDelete}
         />
       )}
-
-      {/* Floating Robot Bottom Right */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <div className="w-14 h-14 rounded-full border border-white/20 bg-[#050505] flex items-center justify-center overflow-hidden cursor-pointer hover:scale-110 transition-all shadow-xl">
-          <img src={AImpatin} alt="bot" className="w-9 h-9 object-contain" />
-        </div>
-      </div>
       
     </div>
   );
