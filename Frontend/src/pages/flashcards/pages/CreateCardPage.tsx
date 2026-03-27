@@ -14,19 +14,20 @@ export function CreateCardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans antialiased flex flex-col">
-      {/* Navbar - Reusing your existing style */}
-      <header className="flex items-center gap-6 px-8 py-10 max-w-[1400px] mx-auto w-full z-20">
+    <div className="min-h-screen bg-black px-8 py-10 text-white font-sans antialiased relative">
+      
+      {/* HEADER ROW (Back Button & Logo) */}
+      <div className="flex items-center gap-6 mb-8">
         <button
           onClick={() => navigate(-1)}
-          className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all bg-black/50 backdrop-blur-md"
+          className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all bg-black/50 backdrop-blur-md"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
         </button>
-        <img src={logo} alt="educAIte" className="h-7 opacity-90" />
-      </header>
+        <img src={logo} alt="educAIte" className="h-10 w-auto" />
+      </div>
 
       <main className="flex-1 max-w-[1200px] mx-auto w-full px-8 pb-20">
         {/* Title Section */}
