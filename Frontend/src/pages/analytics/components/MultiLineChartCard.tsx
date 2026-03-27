@@ -10,7 +10,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-// Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler);
 
 interface Props {
@@ -21,13 +20,8 @@ interface Props {
 }
 
 const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitleValue }: Props) => {
-  // State for the dropdown toggle
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
-  // State for the selected dropdown text (defaults to the passed props)
   const [selectedSubject, setSelectedSubject] = useState(`${titleHighlight} ${titleRest}`);
-
-  // Ref for the "click outside to close" feature
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const dropdownOptions = [
@@ -39,7 +33,6 @@ const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitle
     "Android Programming"
   ];
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -50,7 +43,6 @@ const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitle
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // --- CHART.JS CONFIGURATION ---
   const chartData = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
@@ -112,8 +104,6 @@ const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitle
     ]
   };
 
-  // Using 'any' here bypasses the strict Chart.js type checking 
-  // which prevents those frustrating red lines in your editor.
   const chartOptions: any = {
     responsive: true,
     maintainAspectRatio: false,
@@ -137,39 +127,29 @@ const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitle
     },
     scales: {
       x: {
-        grid: {
-          color: 'rgba(255, 255, 255, 0.05)',
-          display: false, 
-        },
+        grid: { color: 'rgba(255, 255, 255, 0.05)', display: false },
         ticks: { color: 'rgba(255, 255, 255, 0.5)' }
       },
       y: {
         min: 0,
         max: 100,
-        grid: {
-          color: 'rgba(255, 255, 255, 0.1)',
-          display: false, 
-        },
-        border: {
-          dash: [5, 5] 
-        },
-        ticks: {
-          stepSize: 25,
-          color: 'rgba(255, 255, 255, 0.5)',
-          padding: 10,
-        }
+        grid: { color: 'rgba(255, 255, 255, 0.1)', display: false },
+        border: { dash: [5, 5] },
+        ticks: { stepSize: 25, color: 'rgba(255, 255, 255, 0.5)', padding: 10 }
       }
     }
   };
 
   return (
-    <div className="w-full border border-white/20 rounded-[32px] p-8 bg-black mt-8">
+    // Added interactive group classes
+    <div className="w-full border border-white/20 rounded-[32px] p-8 bg-black mt-8 group hover:border-[#00CEC8]/60 hover:shadow-[0_0_30px_rgba(0,206,200,0.15)] hover:-translate-y-1 transition-all duration-300">
+      
       {/* Header & Dropdown */}
       <div className="flex justify-between items-start mb-6">
         <div>
           <h2 className="text-3xl font-bold mb-1"><span className="text-[#00CEC8]">{titleHighlight}</span> {titleRest}</h2>
           <div className="flex items-center gap-4">
-            <p className="text-white/60 text-lg">{subtitleLabel} <span className="text-white font-bold ml-1">{subtitleValue}</span></p>
+            <p className="text-white/60 group-hover:text-white/80 transition-colors text-lg">{subtitleLabel} <span className="text-white font-bold ml-1">{subtitleValue}</span></p>
             <span className="text-[#22c55e] text-xs">↑ +4% this week</span>
           </div>
         </div>
@@ -178,7 +158,7 @@ const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitle
         <div className="relative z-50" ref={dropdownRef}>
           <div 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="border border-white/20 rounded-xl px-4 py-3 flex items-center gap-6 bg-black cursor-pointer hover:bg-white/5 transition min-w-[260px] justify-between"
+            className="border border-white/20 group-hover:border-[#00CEC8]/40 rounded-xl px-4 py-3 flex items-center gap-6 bg-black cursor-pointer hover:bg-white/5 transition-all min-w-[260px] justify-between"
           >
             <span className="text-sm font-medium">{selectedSubject}</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}><path d="M6 9l6 6 6-6"/></svg>
@@ -198,7 +178,7 @@ const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitle
       </div>
 
       {/* Custom HTML Legend */}
-      <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm font-medium">
+      <div className="flex flex-wrap justify-center gap-8 mb-8 text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity">
         <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full bg-[#2563eb]"></div>Human Computer Interaction</div>
         <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full bg-[#ec4899]"></div>Freetrnds</div>
         <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-full bg-[#eab308]"></div>Proglan</div>
@@ -213,7 +193,7 @@ const MultiLineChartCard = ({ titleHighlight, titleRest, subtitleLabel, subtitle
       </div>
 
       {/* AI Insight */}
-      <div className="bg-[#005e5d] rounded-2xl p-6 mt-12 flex items-center gap-4">
+      <div className="bg-[#005e5d] group-hover:bg-[#00706f] transition-colors rounded-2xl p-6 mt-12 flex items-center gap-4">
         <span className="font-bold text-white text-lg whitespace-nowrap">AI Insight:</span>
         <span className="text-white/90 text-sm">Your learning improves when you study consistently 1.8-2.3 hours per day. Continue your routine to maintain strong progress.</span>
       </div>
