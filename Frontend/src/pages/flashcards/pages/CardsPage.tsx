@@ -1,21 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CardRow } from '../components/CardRow';
 import { FlashcardsTopActions } from '../components/FlashcardsTopActions';
 import SearchBar from '../components/SearchBar';
 import { useFlashcards } from '../hooks/useFlashcards';
+import { EditModal } from '../components/EditModal';
+import { DeleteConfirmationModal } from '../components/DeleteConfirmationModal';
 import logo from '../../../assets/educAIte-logo.svg';
 import AImpatin from '../../../assets/robot.svg';
 
 export function CardsPage() {
   const navigate = useNavigate();
-  const { selectedSubdeck, filteredCards, search, setSearch } = useFlashcards();
+  // We remove filteredCards from here and handle it locally so we can edit/delete instantly
+  const { selectedSubdeck, search, setSearch } = useFlashcards();
+
+  // 1. Local State for Cards (Add your actual mock data here)
+  const [cards, setCards] = useState([
+    { id: 'c1', question: 'What is a Primary Key?', answer: 'A unique identifier for a record in a database table.' },
+    { id: 'c2', question: 'What is a Foreign Key?', answer: 'A field in one table that uniquely identifies a row of another table.' },
+    { id: 'c3', question: 'What does ACID stand for?', answer: 'Atomicity, Consistency, Isolation, Durability' },
+  ]);
+
+  // State for modals tracking which card was clicked
+  const [editingCard, setEditingCard] = useState<{ id: string; question: string } | null>(null);
+  const [deletingCard, setDeletingCard] = useState<{ id: string; question: string } | null>(null);
+
+  // --- ACTIONS ---
+
+  // 2. Handle Editing a Card
+  const handleSaveEdit = (newQuestion: string) => {
+    if (editingCard) {
+      // Maps through the cards and updates the question of the matching ID
+      setCards(prevCards => prevCards.map(card => 
+        card.id === editingCard.id ? { ...card, question: newQuestion.trim() } : card
+      ));
+      setEditingCard(null); // Close modal
+    }
+  };
+
+  // 3. Handle Deleting a Card
+  const handleConfirmDelete = () => {
+    if (deletingCard) {
+      // Filters out the card with the matching ID
+      setCards(prevCards => prevCards.filter(card => card.id !== deletingCard.id));
+      setDeletingCard(null); // Close modal
+    }
+  };
+
+  // 4. Apply the search filter to our local cards state
+  const displayedCards = cards.filter(card =>
+    card.question.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-black px-8 py-10 text-white font-sans antialiased relative">
       
       {/* HEADER ROW (Back Button & Logo) */}
-      <div className="flex items-center gap-6 mb-8 max-w-[1400px] mx-auto">
+      <div className="flex items-center gap-6 mb-8">
         <button
           onClick={() => navigate(-1)}
           className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all bg-black/50 backdrop-blur-md"
@@ -24,12 +65,10 @@ export function CardsPage() {
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
         </button>
-        <img src={logo} alt="educAIte" className="h-8" />
+        <img src={logo} alt="educAIte" className="h-10 w-auto" />
       </div>
 
       <main className="max-w-[1400px] mx-auto">
-        
-        {/* FLOATING ACTION ROW (Top Right) */}
         <FlashcardsTopActions />
 
         {/* TITLE & SEARCH ROW */}
@@ -43,7 +82,6 @@ export function CardsPage() {
             </p>
           </div>
 
-          {/* Locked Search Bar Width */}
           <div className="w-[320px]">
             <SearchBar value={search} onChange={setSearch} />
           </div>
@@ -51,24 +89,40 @@ export function CardsPage() {
 
         {/* CARDS LIST HEADER */}
         <h2 className="mb-6 text-[22px] font-bold tracking-wide">
-          Cards <span className="text-white/40 font-normal">({selectedSubdeck?.cardCount ?? 0})</span>
+          Cards <span className="text-white/40 font-normal">({displayedCards.length})</span>
         </h2>
 
         {/* HORIZONTAL CARDS LIST */}
         <div className="space-y-6 pb-20">
-          {filteredCards.map((card) => (
-            <CardRow key={card.id} card={card} />
+          {displayedCards.map((card) => (
+            <CardRow 
+              key={card.id} 
+              card={card} 
+              onEdit={() => setEditingCard({ id: card.id, question: card.question })}
+              onDelete={() => setDeletingCard({ id: card.id, question: card.question })}
+            />
           ))}
         </div>
-        
       </main>
 
-      {/* Floating Robot Bottom Right */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <div className="w-14 h-14 rounded-full border border-white/20 bg-[#050505] flex items-center justify-center overflow-hidden cursor-pointer hover:scale-110 transition-all shadow-xl">
-          <img src={AImpatin} alt="bot" className="w-9 h-9 object-contain" />
-        </div>
-      </div>
+      {/* MODALS RENDERED ABOVE EVERYTHING ELSE */}
+      {editingCard && (
+        <EditModal 
+          title="Edit Flashcard"
+          label="Question Text"
+          initialValue={editingCard.question}
+          onClose={() => setEditingCard(null)}
+          onSave={handleSaveEdit}
+        />
+      )}
+
+      {deletingCard && (
+        <DeleteConfirmationModal 
+          title={deletingCard.question}
+          onClose={() => setDeletingCard(null)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
       
     </div>
   );

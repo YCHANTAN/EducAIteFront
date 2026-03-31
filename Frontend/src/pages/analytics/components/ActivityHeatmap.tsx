@@ -2,29 +2,27 @@ import React from 'react'
 
 const months = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
 
-// We need 53 columns (weeks) and 7 rows (days) to make a full year grid
 const weeks = Array.from({ length: 53 });
 const days = Array.from({ length: 7 });
 
-// Helper to generate the square styles based on the image's colors
+// Note: I moved this function inside the component or just kept it above.
 const getSquareStyle = (weekIndex: number, dayIndex: number) => {
-  // Creating some dummy data that looks like your screenshot
   const random = Math.random();
-  if (random > 0.95) return "bg-[#4ade80] border-[#4ade80]"; // Brightest green
+  if (random > 0.95) return "bg-[#4ade80] border-[#4ade80]";
   if (random > 0.90) return "bg-[#22c55e] border-[#22c55e]"; 
   if (random > 0.85) return "bg-[#16a34a] border-[#16a34a]";
-  if (random > 0.80) return "bg-[#14532d] border-[#14532d]"; // Darkest green
+  if (random > 0.80) return "bg-[#14532d] border-[#14532d]"; 
   
-  // Empty state: transparent with white/20 border
   return "bg-transparent border border-white/20"; 
 }
 
 const ActivityHeatmap = () => {
   return (
-    <div className="w-full border border-white/20 rounded-[32px] p-8 mt-6">
+    // Added group, hover states, and smooth transition here
+    <div className="w-full border border-white/20 rounded-[32px] p-8 mt-6 group hover:border-[#00CEC8]/60 hover:shadow-[0_0_30px_rgba(0,206,200,0.15)] hover:-translate-y-1 transition-all duration-300 cursor-pointer">
       
       {/* Months Header Row */}
-      <div className="flex ml-12 mb-3 justify-between pr-4 text-white/80 text-sm font-medium">
+      <div className="flex ml-12 mb-3 justify-between pr-4 text-white/80 group-hover:text-white transition-colors text-sm font-medium">
         {months.map((month) => (
           <span key={month}>{month}</span>
         ))}
@@ -32,7 +30,7 @@ const ActivityHeatmap = () => {
 
       <div className="flex items-center gap-4">
         {/* Days Sidebar */}
-        <div className="flex flex-col justify-between h-[120px] text-white/80 text-sm font-medium">
+        <div className="flex flex-col justify-between h-[120px] text-white/80 group-hover:text-white transition-colors text-sm font-medium">
           <span className="invisible">Sun</span>
           <span>Mon</span>
           <span className="invisible">Tue</span>
@@ -48,7 +46,7 @@ const ActivityHeatmap = () => {
             days.map((_, d) => (
               <div 
                 key={`${w}-${d}`} 
-                className={`w-[14px] h-[14px] rounded-[4px] ${getSquareStyle(w, d)}`}
+                className={`w-[14px] h-[14px] rounded-[4px] ${getSquareStyle(w, d)} hover:scale-125 hover:ring-2 hover:ring-[#00CEC8] transition-all`}
               ></div>
             ))
           )}

@@ -1,29 +1,49 @@
-import React, { useState } from 'react'; // 1. IMPORTANT: Added useState
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DeckCard from '../components/DeckCard';
 import SearchBar from '../components/SearchBar';
 import { useFlashcards } from '../hooks/useFlashcards';
-import { AddSubdeckModal } from '../components/AddSubdeckModal'; // 2. IMPORTANT: Imported the AddSubdeckModal
-
-// Assuming logo is in your assets folder like the other pages
+import { AddSubdeckModal } from '../components/AddSubdeckModal'; 
+import { EditModal } from '../components/EditModal'; // New Import
+import { DeleteConfirmationModal } from '../components/DeleteConfirmationModal'; // New Import
 import logo from '../../../assets/educAIte-logo.svg'; 
 
 export function DecksPage() {
   const navigate = useNavigate();
   const { search, setSearch } = useFlashcards();
-
-  // 3. IMPORTANT: State to control modal visibility
+  
+  // Modal Visibility States
   const [isAddSubdeckModalOpen, setIsAddSubdeckModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<{ id: string; title: string } | null>(null);
+  const [deletingItem, setDeletingItem] = useState<{ id: string; title: string } | null>(null);
 
-  // Mock data tailored exactly to your screenshot
-  const subdecks = [
+  // Data State
+  const [subdecks, setSubdecks] = useState([
     { id: '1', title: 'Relational Models and Normalization', cardCount: 2 },
     { id: '2', title: 'Language Paradigms', cardCount: 2 },
     { id: '3', title: 'Task Analysis', cardCount: 120 },
     { id: '4', title: 'Syntax vs Semantics', cardCount: 12 },
     { id: '5', title: 'Machine Learning Fundamentals', cardCount: 27 },
     { id: '6', title: 'Cybersecurity', cardCount: 48 },
-  ];
+  ]);
+
+  // --- ACTIONS ---
+
+  const handleSaveEdit = (newTitle: string) => {
+    if (editingItem) {
+      setSubdecks(prev => prev.map(deck => 
+        deck.id === editingItem.id ? { ...deck, title: newTitle.trim() } : deck
+      ));
+      setEditingItem(null);
+    }
+  };
+
+  const handleConfirmDelete = () => {
+    if (deletingItem) {
+      setSubdecks(prev => prev.filter(deck => deck.id !== deletingItem.id));
+      setDeletingItem(null);
+    }
+  };
 
   const filteredSubdecks = subdecks.filter(deck =>
     deck.title.toLowerCase().includes(search.toLowerCase())
@@ -32,7 +52,7 @@ export function DecksPage() {
   return (
     <div className="min-h-screen bg-black px-8 py-10 text-white font-sans antialiased relative">
       
-      {/* HEADER ROW (Back Button & Logo) */}
+      {/* HEADER ROW */}
       <div className="flex items-center gap-6 mb-8">
         <button
           onClick={() => navigate(-1)}
@@ -42,15 +62,13 @@ export function DecksPage() {
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
         </button>
-        <img src={logo} alt="educAIte" className="h-8" />
+        <img src={logo} alt="educAIte" className="h-10 w-auto" />
       </div>
 
       <main className="max-w-[1400px] mx-auto">
         
-        {/* FLOATING ACTION ROW (Top Right) */}
+        {/* FLOATING ACTION ROW */}
         <div className="flex justify-end mb-4">
-          
-          {/* 4. IMPORTANT: Added onClick handler to open the modal */}
           <button 
             onClick={() => setIsAddSubdeckModalOpen(true)}
             className="flex items-center gap-2 bg-white text-black text-sm font-bold px-6 py-2.5 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:scale-105 transition-all"
@@ -74,41 +92,67 @@ export function DecksPage() {
             </p>
           </div>
 
-          {/* Locked Search Bar Width to match the visual weight of the grid */}
           <div className="w-[320px]">
             <SearchBar value={search} onChange={setSearch} />
           </div>
         </div>
 
-        {/* SUBDECKS GRID (3 Columns) */}
+        {/* SUBDECKS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredSubdecks.map((subdeck) => (
             <DeckCard
               key={subdeck.id}
               title={subdeck.title}
               subtitle={`Cards: ${subdeck.cardCount}`}
-              onClick={() => {
-                // Navigate deeper into the specific card list or study mode!
-                navigate(`/cards`);
-              }}
+              onClick={() => navigate(`/cards`)}
+              showMenu={true}
+              // Updated to open custom modals instead of prompts
+              onEdit={() => setEditingItem({ id: subdeck.id, title: subdeck.title })}
+              onDelete={() => setDeletingItem({ id: subdeck.id, title: subdeck.title })}
             />
           ))}
         </div>
-        
       </main>
 
-      {/* 5. IMPORTANT: Render the AddSubdeckModal when state is true */}
+      {/* --- MODAL RENDERING --- */}
+
+      {/* ADD MODAL */}
       {isAddSubdeckModalOpen && (
         <AddSubdeckModal 
           parentDeckName="Database Management System"
           onClose={() => setIsAddSubdeckModalOpen(false)}
-          onSubmit={(title, color, picture) => {
-            console.log("New Subdeck created:", title, color, picture?.name);
-            setIsAddSubdeckModalOpen(false); // Close the modal after submitting
+          onSubmit={(title) => {
+            const newDeck = {
+              id: Date.now().toString(),
+              title: title,
+              cardCount: 0
+            };
+            setSubdecks(prev => [...prev, newDeck]);
+            setIsAddSubdeckModalOpen(false);
           }}
         />
       )}
 
+      {/* EDIT MODAL */}
+      {editingItem && (
+        <EditModal 
+          title="Edit Subdeck"
+          label="Deck Name"
+          initialValue={editingItem.title}
+          onClose={() => setEditingItem(null)}
+          onSave={handleSaveEdit}
+        />
+      )}
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {deletingItem && (
+        <DeleteConfirmationModal 
+          title={deletingItem.title}
+          onClose={() => setDeletingItem(null)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+      
     </div>
   );
 }

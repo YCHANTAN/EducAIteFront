@@ -52,10 +52,12 @@ const BestPerformingCourse = () => {
   };
 
   return (
-    <div className="w-full border border-white/20 rounded-[32px] p-8 bg-black mt-8">
+    // Added interactive group classes here
+    <div className="w-full border border-white/20 rounded-[32px] p-8 bg-black mt-8 group hover:border-[#00CEC8]/60 hover:shadow-[0_0_30px_rgba(0,206,200,0.15)] hover:-translate-y-1 transition-all duration-300 cursor-pointer">
       <div className="mb-8">
         <h2 className="text-3xl font-bold mb-1">Best Performing <span className="text-[#00CEC8]">Courses</span></h2>
-        <p className="text-white/60 text-lg">Ranked by average mastery score</p>
+        {/* Added group-hover text color transition to the subtitle */}
+        <p className="text-white/60 group-hover:text-white/80 transition-colors text-lg">Ranked by average mastery score</p>
       </div>
       <div className="h-[300px] w-full">
         <Bar data={chartData} options={chartOptions} />

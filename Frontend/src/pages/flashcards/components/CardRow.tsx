@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { CardOptionsModal } from './CardOptionsModal';
+import React from 'react';
+import ThreedotsModal from './ThreedotsModal';
 
 interface CardRowProps {
   card: {
@@ -7,39 +7,44 @@ interface CardRowProps {
     question: string;
     answer: string | string[];
   };
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
-export function CardRow({ card }: CardRowProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export function CardRow({ card, onEdit, onDelete }: CardRowProps) {
   const isMultipleChoice = Array.isArray(card.answer);
 
   return (
     <div className="relative border border-white/10 rounded-[32px] p-8 mb-6 
-                bg-white/[0.03] 
-                hover:bg-[#050505] 
-                hover:border-[#00CEC8]/30
-                transition-all duration-300 group shadow-sm cursor-pointer">
+                    bg-white/[0.03] 
+                    hover:bg-[#050505] 
+                    hover:border-[#00CEC8]/30
+                    transition-all duration-300 group shadow-sm cursor-pointer">
       
-      {/* Three Dots Action Menu Button */}
-      <button 
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className="absolute top-6 right-8 text-white/30 hover:text-white transition-colors z-20 p-2"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-          <circle cx="5" cy="12" r="1.5"></circle>
-          <circle cx="12" cy="12" r="1.5"></circle>
-          <circle cx="19" cy="12" r="1.5"></circle>
-        </svg>
-      </button>
-
-      {/* Options Modal - Appears relative to this card */}
-      {isMenuOpen && (
-        <CardOptionsModal 
-          onClose={() => setIsMenuOpen(false)}
-          onEdit={() => console.log("Edit card:", card.id)}
-          onDelete={() => console.log("Delete card:", card.id)}
-        />
-      )}
+      {/* POSITIONING THE THREE DOTS MODAL */}
+      <div className="absolute top-6 right-6 z-30">
+        <ThreedotsModal>
+           <button 
+             onClick={(e) => {
+               e.stopPropagation(); 
+               onEdit(); 
+             }}
+             className="w-full text-left px-5 py-3 text-[15px] text-white/70 hover:bg-white/5 hover:text-white transition-colors"
+           >
+             ✏️ Edit card
+           </button>
+           <div className="h-[1px] w-full bg-white/5" />
+           <button 
+             onClick={(e) => {
+               e.stopPropagation(); 
+               onDelete(); 
+             }}
+             className="w-full text-left px-5 py-3 text-[15px] text-red-400 hover:bg-red-400/5 transition-colors"
+           >
+             🗑️ Delete card
+           </button>
+        </ThreedotsModal>
+      </div>
 
       {/* Question / Front */}
       <div className="mb-8 pr-16">
@@ -68,7 +73,6 @@ export function CardRow({ card }: CardRowProps) {
           )}
         </div>
       </div>
-      
     </div>
   );
 }

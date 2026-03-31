@@ -2,24 +2,23 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../../assets/educAIte-logo.svg';
 import AImpatin from '../../../assets/robot.svg';
-import { useFlashcards } from '../hooks/useFlashcards';
+import MagicBento from '../../../components/MagicBento'; // Ensure this points to your updated MagicBento file
 
 export function PerformancePage() {
   const navigate = useNavigate();
   
-  // Assuming your hook provides this data. If not, you can mock it temporarily!
-  // const { quizResult } = useFlashcards();
+  // Mock Data
   const quizResult = {
     totalResponses: 2,
     highestScore: 100,
     lowestScore: 72,
     mediumScore: 87.5,
     finalScore: 72,
-    insight: "Your performance shows solid understanding, but you need to focus on the areas where mistakes were frequent; with clearer concept application and targeted practice, you can significantly improve."
+    insight: "Your performance shows solid understanding. Focus on the areas where mistakes were frequent; with targeted practice, you can significantly improve."
   };
 
-  // --- SVG Gauge Calculations for the 72% ---
-  const radius = 100;
+  // --- SVG Gauge Calculations ---
+  const radius = 90; // Slightly smaller to fit perfectly in the bento box
   const cx = 110;
   const cy = 110;
   const circumference = Math.PI * radius; 
@@ -29,148 +28,166 @@ export function PerformancePage() {
   const thumbY = cy - radius * Math.sin(angleInRadians);
 
   return (
-    <div className="min-h-screen bg-black px-8 py-8 text-white font-sans antialiased relative overflow-x-hidden">
+    <div className="min-h-screen bg-black px-8 pt-10 pb-20 text-white font-sans antialiased relative overflow-x-hidden">
       
-      {/* HEADER ROW (Back Button, Logo, Navigation) */}
-      <div className="flex items-center justify-between mb-8 max-w-[1400px] mx-auto w-full">
+      {/* =========================================
+          HEADER ROW
+          ========================================= */}
+      <div className="flex items-center justify-between mb-12 max-w-[1400px] mx-auto w-full">
         <div className="flex items-center gap-6">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all bg-black/50"
+            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all bg-black/50 backdrop-blur-md shadow-lg z-20"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           </button>
-          <img src={logo} alt="educAIte" className="h-8" />
+          <img src={logo} alt="educAIte" className="h-9 opacity-90 z-20" />
         </div>
         
         {/* Top Navigation Bar */}
-        <div className="hidden md:flex bg-black border border-white/20 rounded-full px-8 py-3 gap-8 text-sm font-medium text-white/50">
+        <div className="hidden md:flex bg-[#050505] border border-white/10 rounded-full px-10 py-3.5 gap-10 text-[13px] font-bold tracking-wide text-white/50 shadow-2xl z-20">
            <span className="hover:text-white cursor-pointer transition-colors">Home</span>
            <span className="hover:text-white cursor-pointer transition-colors">Courses</span>
            <span className="hover:text-white cursor-pointer transition-colors">Analytics</span>
-           <span className="text-[#00CEC8] border-b-2 border-[#00CEC8] pb-1 cursor-pointer">Flashcards</span>
+           <span className="text-[#00CEC8] cursor-pointer drop-shadow-[0_0_8px_rgba(0,206,200,0.8)]">Flashcards</span>
            <span className="hover:text-white cursor-pointer transition-colors">Tracker</span>
            <span className="hover:text-white cursor-pointer transition-colors">Calendar</span>
            <span className="hover:text-white cursor-pointer transition-colors">Resume</span>
         </div>
         
-        <div className="w-[120px]"></div> {/* Spacer */}
+        <div className="w-[120px]"></div>
       </div>
 
-      <main className="max-w-[1200px] mx-auto pb-20">
+      <main className="max-w-[1400px] mx-auto relative z-10">
         
-        {/* TITLE & BACK BUTTON */}
-        <div className="mb-10 flex items-end justify-between">
-          <div className="w-[150px]"></div> {/* Spacer */}
-          <h1 className="text-[44px] font-semibold text-[#00CEC8] tracking-tight">
-            Overall Performance
+        {/* TITLE */}
+        <div className="mb-10 flex flex-col items-center text-center">
+          <h1 className="text-[36px] md:text-[42px] font-semibold text-white tracking-tight">
+            Overall <span className="text-[#00CEC8]">Performance</span>
           </h1>
-          <button 
-            onClick={() => navigate(-1)} 
-            className="rounded-full bg-white px-8 py-2.5 text-black font-bold text-sm hover:scale-105 transition-transform"
-          >
-            Back to lesson
-          </button>
+          <div className="h-[2px] w-20 bg-[#00CEC8]/60 mx-auto mt-3 rounded-full"></div>
         </div>
 
-        {/* --- STATS GRID --- */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 mb-4">
-          <div className="rounded-[24px] border border-white/20 p-6 bg-[#050505]">
-            <p className="text-[44px] font-bold text-[#00CEC8] leading-none mb-2">{quizResult.totalResponses}</p>
-            <p className="text-[15px] font-medium text-white/80">Total Responses</p>
-          </div>
-          <div className="rounded-[24px] border border-white/20 p-6 bg-[#050505]">
-            <p className="text-[44px] font-bold text-[#00CEC8] leading-none mb-2">{quizResult.highestScore}%</p>
-            <p className="text-[15px] font-medium text-white/80">Highest Score</p>
-          </div>
-          <div className="rounded-[24px] border border-white/20 p-6 bg-[#050505]">
-            <p className="text-[44px] font-bold text-[#00CEC8] leading-none mb-2">{quizResult.lowestScore}%</p>
-            <p className="text-[15px] font-medium text-white/80">Lowest Score</p>
-          </div>
-          <div className="rounded-[24px] border border-white/20 p-6 bg-[#050505]">
-            <p className="text-[44px] font-bold text-[#00CEC8] leading-none mb-2">{quizResult.mediumScore}%</p>
-            <p className="text-[15px] font-medium text-white/80">Medium Score</p>
-          </div>
-        </div>
-
-        {/* --- MAIN CHARTS GRID --- */}
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.3fr_1fr]">
+        {/* =========================================
+            MAGIC BENTO GRID
+            ========================================= */}
+        {/* 4 Columns. The auto-rows set the base height of 1 grid square to ~180px */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[180px]">
           
-          {/* LEFT: PIE CHART AREA */}
-          <div className="rounded-[24px] border border-white/20 p-10 bg-[#050505] flex items-center justify-between">
-            
-            {/* The CSS Conic Gradient Pie Chart */}
-            <div className="relative flex items-center justify-center w-[280px] h-[280px] ml-4">
-              {/* Outer Glow */}
-              <div className="absolute inset-0 rounded-full bg-[#00CEC8] blur-[80px] opacity-20"></div>
-              {/* The Pie Chart */}
-              <div 
-                className="w-full h-full rounded-full relative z-10"
-                style={{
-                  background: 'conic-gradient(from 230deg, #1D4ED8 0% 15%, #2563EB 15% 35%, #00CEC8 35% 100%)'
-                }}
-              />
-            </div>
-
-            {/* Legend */}
-            <div className="flex flex-col gap-6 pr-10">
-              <div className="flex items-center gap-4">
-                <div className="w-3 h-3 rounded-full bg-[#00CEC8]"></div>
-                <span className="text-[22px] font-medium">Mastered</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-3 h-3 rounded-full bg-[#2563EB]"></div>
-                <span className="text-[22px] font-medium">Almost</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-3 h-3 rounded-full bg-[#1D4ED8]"></div>
-                <span className="text-[22px] font-medium">Unfamiliar</span>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: GAUGES & INSIGHTS */}
-          <div className="grid gap-4 flex-col">
-            
-            {/* Top Right: The Gauge */}
-            <div className="rounded-[24px] border border-white/20 p-8 bg-[#050505] flex flex-col items-center">
-              <h2 className="mb-6 text-[18px] font-medium text-white/90 text-center">
-                Your score on the Technical Programming quiz
-              </h2>
+          {/* 1. GAUGE CHART (Tall: 1 Col x 2 Rows) */}
+          <MagicBento className="col-span-1 row-span-2 h-full bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 flex flex-col items-center justify-between group hover:border-[#00CEC8]/30 transition-colors">
+              <h2 className="text-[16px] font-bold text-white/60 uppercase tracking-widest text-center">Final Score</h2>
               
-              <div className="relative w-[220px] h-[110px]">
+              <div className="relative w-[220px] h-[110px] flex-shrink-0 mt-8 pointer-events-none">
                 <svg viewBox="0 0 220 120" className="w-full h-full overflow-visible">
-                  <path d={`M 10 ${cy} A ${radius} ${radius} 0 0 1 210 ${cy}`} fill="none" stroke="#E2E8F0" strokeWidth="16" strokeLinecap="round" />
+                  <path d={`M 10 ${cy} A ${radius} ${radius} 0 0 1 210 ${cy}`} fill="none" stroke="#222" strokeWidth="16" strokeLinecap="round" />
                   <path 
                     d={`M 10 ${cy} A ${radius} ${radius} 0 0 1 210 ${cy}`} 
                     fill="none" stroke="#00CEC8" strokeWidth="16" strokeLinecap="round"
                     strokeDasharray={circumference} strokeDashoffset={dashoffset}
+                    className="transition-all duration-1000 ease-out"
                   />
-                  <circle cx={thumbX} cy={thumbY} r="10" fill="#00CEC8" stroke="white" strokeWidth="4" />
+                  <circle cx={thumbX} cy={thumbY} r="8" fill="#00CEC8" stroke="#0A0A0A" strokeWidth="4" />
                 </svg>
                 <div className="absolute bottom-[-10px] left-0 right-0 flex justify-center">
-                  <span className="text-[40px] font-bold text-[#00CEC8] leading-none">
+                  <span className="text-[48px] font-black text-[#00CEC8] leading-none drop-shadow-[0_0_15px_rgba(0,206,200,0.3)]">
                     {quizResult.finalScore}%
                   </span>
                 </div>
               </div>
-            </div>
+              <div className="mt-8 w-full z-20">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents the MagicBento ripple from firing when clicking the button
+                    navigate('/cards');  // <-- Changed from -1 to explicitly route to the Cards page
+                  }} 
+                  className="rounded-full bg-white/5 border border-white/10 px-8 py-3 text-white font-bold text-[13px] hover:bg-white hover:text-black hover:scale-105 transition-all w-full tracking-wide"
+                >
+                  Back to lesson
+                </button>
+              </div>
+          </MagicBento>
 
-            {/* Bottom Right: AI Insights */}
-            <div className="rounded-[24px] border border-white/20 p-8 bg-[#050505]">
-              <h3 className="mb-4 text-[18px] font-semibold text-[#00CEC8]">AI Insights:</h3>
-              <p className="text-[13px] leading-[1.8] text-white/90 font-medium">
+          {/* 2. MASTERY PIE CHART (Large: 2 Cols x 2 Rows) */}
+          <MagicBento className="col-span-1 lg:col-span-2 row-span-2 h-full bg-[#0A0A0A] border border-white/5 rounded-[32px] p-10 flex items-center justify-between overflow-hidden relative group hover:border-blue-500/30 transition-colors">
+              <div className="flex-1 z-20 pointer-events-none">
+                <h2 className="text-[16px] font-bold text-white/60 uppercase tracking-widest mb-10">Knowledge Mastery</h2>
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-4 h-4 rounded-full bg-[#00CEC8] shadow-[0_0_10px_#00CEC8]"></div>
+                    <span className="text-[20px] font-medium text-white/90">Mastered</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-4 h-4 rounded-full bg-[#2563EB] shadow-[0_0_10px_#2563EB]"></div>
+                    <span className="text-[20px] font-medium text-white/90">Almost</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-4 h-4 rounded-full bg-[#1D4ED8] shadow-[0_0_10px_#1D4ED8]"></div>
+                    <span className="text-[20px] font-medium text-white/90">Unfamiliar</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Premium Donut Chart */}
+              <div className="relative flex items-center justify-center w-[240px] h-[240px] z-20 pointer-events-none">
+                <div className="absolute inset-0 rounded-full bg-[#00CEC8] blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                <div 
+                  className="w-full h-full rounded-full relative flex items-center justify-center shadow-2xl"
+                  style={{ background: 'conic-gradient(from 230deg, #1D4ED8 0% 15%, #2563EB 15% 35%, #00CEC8 35% 100%)' }}
+                >
+                  <div className="w-[65%] h-[65%] bg-[#0A0A0A] rounded-full shadow-inner flex items-center justify-center">
+                    <span className="text-white/40 font-bold tracking-widest text-sm uppercase">Stats</span>
+                  </div>
+                </div>
+              </div>
+          </MagicBento>
+
+          {/* 3. AI INSIGHTS (Tall: 1 Col x 2 Rows) */}
+          <MagicBento className="col-span-1 row-span-2 h-full bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 flex flex-col relative overflow-hidden group hover:border-[#00CEC8]/30 transition-colors">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#00CEC8]/10 blur-[50px] rounded-full z-0 pointer-events-none"></div>
+              
+              <div className="flex items-center gap-3 mb-6 z-20 pointer-events-none">
+                <div className="w-10 h-10 rounded-full bg-[#00CEC8]/10 flex items-center justify-center text-[#00CEC8]">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+                </div>
+                <h3 className="text-[16px] font-bold text-[#00CEC8] uppercase tracking-widest">AI Insight</h3>
+              </div>
+              
+              <p className="text-[15px] leading-[1.8] text-white/70 font-medium z-20 pointer-events-none">
                 {quizResult.insight}
               </p>
-            </div>
-          </div>
-        </div>
+          </MagicBento>
 
+          {/* 4. TOTAL RESPONSES (Square: 1x1) */}
+          <MagicBento className="col-span-1 row-span-1 h-full bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 flex flex-col justify-end group hover:border-white/20 transition-colors z-20">
+              <p className="text-[13px] font-bold text-white/40 uppercase tracking-widest mb-2 pointer-events-none">Total Responses</p>
+              <p className="text-[48px] font-black text-white leading-none pointer-events-none">{quizResult.totalResponses}</p>
+          </MagicBento>
+
+          {/* 5. HIGHEST SCORE (Square: 1x1) */}
+          <MagicBento className="col-span-1 row-span-1 h-full bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 flex flex-col justify-end group hover:border-[#00CEC8]/30 transition-colors z-20">
+              <p className="text-[13px] font-bold text-[#00CEC8]/60 uppercase tracking-widest mb-2 pointer-events-none">Highest Score</p>
+              <p className="text-[48px] font-black text-[#00CEC8] leading-none pointer-events-none">{quizResult.highestScore}<span className="text-[24px]">%</span></p>
+          </MagicBento>
+
+          {/* 6. LOWEST SCORE (Square: 1x1) */}
+          <MagicBento className="col-span-1 row-span-1 h-full bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 flex flex-col justify-end group hover:border-red-500/30 transition-colors z-20">
+              <p className="text-[13px] font-bold text-red-400/60 uppercase tracking-widest mb-2 pointer-events-none">Lowest Score</p>
+              <p className="text-[48px] font-black text-red-400 leading-none pointer-events-none">{quizResult.lowestScore}<span className="text-[24px]">%</span></p>
+          </MagicBento>
+
+          {/* 7. MEDIUM SCORE (Square: 1x1) */}
+          <MagicBento className="col-span-1 row-span-1 h-full bg-[#0A0A0A] border border-white/5 rounded-[32px] p-8 flex flex-col justify-end group hover:border-blue-400/30 transition-colors z-20">
+              <p className="text-[13px] font-bold text-blue-400/60 uppercase tracking-widest mb-2 pointer-events-none">Medium Score</p>
+              <p className="text-[48px] font-black text-blue-400 leading-none pointer-events-none">{quizResult.mediumScore}<span className="text-[24px]">%</span></p>
+          </MagicBento>
+
+        </div>
       </main>
 
       {/* Floating Robot Bottom Right */}
       <div className="fixed bottom-8 right-8 z-50">
-        <div className="w-14 h-14 rounded-full border border-white/20 bg-[#050505] flex items-center justify-center overflow-hidden cursor-pointer hover:scale-110 transition-all shadow-xl">
+        <div className="w-14 h-14 rounded-full border border-white/20 bg-[#050505] flex items-center justify-center overflow-hidden cursor-pointer hover:scale-110 transition-all shadow-[0_0_20px_rgba(0,0,0,0.8)]">
           <img src={AImpatin} alt="bot" className="w-9 h-9 object-contain" />
         </div>
       </div>
