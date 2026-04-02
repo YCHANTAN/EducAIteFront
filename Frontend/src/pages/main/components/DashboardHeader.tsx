@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion'; // <-- IMPORT FRAMER MOTION
+import { motion } from 'framer-motion';
 import Search from './Search';
 
 const DashboardHeader: React.FC = () => {
