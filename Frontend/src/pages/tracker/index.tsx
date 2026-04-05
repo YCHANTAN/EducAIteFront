@@ -70,7 +70,6 @@ const Tracker: React.FC = () => {
     }
 
     return (
-        // RESPONSIVE FIX: pt-36 on mobile to completely clear the navbar, locked to lg:pt-32 on laptop.
         <div className="min-h-[100dvh] bg-black text-white font-sans antialiased pt-36 lg:pt-32 pb-16 lg:pb-24 px-4 lg:px-8 relative z-10 overflow-x-hidden">
             <Logo />
             <div className="max-w-[1280px] mx-auto">

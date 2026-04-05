@@ -30,14 +30,11 @@ const Table = ({ data }: Props) => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}  
             transition={{ duration: 0.6, ease: "easeOut" }} 
-            // RESPONSIVE FIX: Hidden overflow to keep the rounded corners clean
             className="w-full bg-[#111111] rounded-xl lg:rounded-3xl border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)] overflow-hidden"
         >
-            {/* RESPONSIVE FIX: table-fixed on mobile ensures columns share the tight space fairly */}
             <table className="w-full text-left border-collapse table-fixed lg:table-auto">
                 <thead>
                     <tr className="border-b border-white/10 bg-white/[0.02]">
-                        {/* RESPONSIVE FIX: Tiny padding (px-2) and text sizes (text-[9px]) for mobile */}
                         <th className="w-[28%] lg:w-auto px-2 py-3 lg:px-6 lg:py-5 text-[9px] sm:text-[10px] lg:text-xs font-bold text-white/40 uppercase tracking-tighter lg:tracking-wider leading-tight">Course</th>
                         <th className="w-[12%] lg:w-auto px-1 py-3 lg:px-6 lg:py-5 text-[8px] sm:text-[10px] lg:text-xs font-bold text-white/40 uppercase tracking-tighter lg:tracking-wider text-center lg:text-left">Units</th>
                         <th className="w-[15%] lg:w-auto px-1 py-3 lg:px-6 lg:py-5 text-[8px] sm:text-[10px] lg:text-xs font-bold text-white/40 uppercase tracking-tighter lg:tracking-wider text-center lg:text-left">Midterm <span className="hidden lg:inline">Grade</span></th>
@@ -56,7 +53,6 @@ const Table = ({ data }: Props) => {
                     ) : (
                         data.map((item, index) => (
                             <tr key={index} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                                {/* RESPONSIVE FIX: Course name wraps naturally on mobile so it doesn't break the layout */}
                                 <td className="px-2 py-3 lg:px-6 lg:py-5 text-[10px] sm:text-xs lg:text-base text-white/90 font-medium break-words leading-tight">{item.course}</td>
                                 <td className="px-1 py-3 lg:px-6 lg:py-5 text-[10px] sm:text-xs lg:text-base text-white/70 text-center lg:text-left">{item.units}</td>
                                 <td className="px-1 py-3 lg:px-6 lg:py-5 text-[10px] sm:text-xs lg:text-base text-white/70 text-center lg:text-left">{item.midtermGrade.toFixed(1)}</td>

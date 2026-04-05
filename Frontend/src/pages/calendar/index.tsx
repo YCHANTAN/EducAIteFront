@@ -68,32 +68,39 @@ const Calendar: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white font-sans antialiased pt-32 pb-12 px-6 relative z-10">
+        // RESPONSIVE FIX: Adjusted padding for mobile (px-4, pt-24) to clear navbars, locks to original sizes on lg:
+        <div className="min-h-[100dvh] bg-black text-white font-sans antialiased pt-24 lg:pt-32 pb-16 lg:pb-12 px-4 lg:px-6 relative z-10 overflow-x-hidden">
             <Logo />
             <div className="max-w-[1400px] mx-auto">
                 
                 {/* Header Row */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+                {/* RESPONSIVE FIX: Stacks neatly on mobile, side-by-side on lg: */}
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 lg:mb-10 gap-4 lg:gap-6 w-full">
                     <motion.h1
                         initial={{ opacity: 0, x: -100 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="text-4xl md:text-[2.5rem] font-bold tracking-tight"
+                        // RESPONSIVE FIX: Scaled text down to 3xl on mobile
+                        className="text-3xl lg:text-[2.5rem] font-bold tracking-tight"
                     >
                         Calendar
                     </motion.h1>
-                    <Search 
-                        events={events} 
-                        onResultClick={handleSearchResultClick} 
-                    />
+                    
+                    {/* RESPONSIVE FIX: Ensures the Search component spans full width on mobile */}
+                    <div className="w-full lg:w-auto">
+                        <Search 
+                            events={events} 
+                            onResultClick={handleSearchResultClick} 
+                        />
+                    </div>
                 </div>
 
                 {/* Main Content Split */}
-                <div className="flex flex-col xl:flex-row gap-8">
+                <div className="flex flex-col xl:flex-row gap-8 lg:gap-10">
 
                     {/* Left Side: Main Grid */}
                     <div className="w-full xl:w-2/3 flex flex-col">
-                        <div className="mb-6">
+                        <div className="mb-4 lg:mb-6">
                             <MonthYearSelector
                                 month={currentMonth}
                                 year={currentYear}
@@ -109,8 +116,10 @@ const Calendar: React.FC = () => {
                     </div>
 
                     {/* Right Side: Sidebar */}
-                    <div className="w-full xl:w-1/3 shrink-0 flex flex-col gap-6">
-                        <div className="flex justify-end">
+                    <div className="w-full xl:w-1/3 shrink-0 flex flex-col gap-6 lg:gap-8 mt-4 xl:mt-0">
+                        
+                        {/* RESPONSIVE FIX: Center-aligns the Add Event button on mobile for easier thumb access, right-aligns on desktop */}
+                        <div className="flex justify-center sm:justify-end w-full">
                             <AddEvent onClick={() => setDialogVisibility(true)} />
                         </div>
                         

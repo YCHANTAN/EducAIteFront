@@ -30,8 +30,7 @@ const DropdownSemester = ({ selections, currentSelection, onSelectChange }: Prop
         <motion.div 
             initial={{ opacity: 0, x: 100 }} 
             animate={{ opacity: 1, x: 0 }}    
-            transition={{ duration: 0.6, ease: "easeOut" }} 
-            // RESPONSIVE FIX: Switched md:w-72 to lg:w-72 to match your tracker's layout breakpoint
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="relative w-full lg:w-72 z-50" 
             ref={dropdownRef}
         >
@@ -39,7 +38,6 @@ const DropdownSemester = ({ selections, currentSelection, onSelectChange }: Prop
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                // RESPONSIVE FIX: Scaled padding and text size (text-xs/sm) for mobile
                 className={`w-full flex justify-between items-center bg-[#111111] text-white text-xs lg:text-sm font-medium border-[1.5px] px-4 lg:px-5 py-3 lg:py-3.5 rounded-xl transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:bg-white/5 ${
                     isOpen ? 'border-[#00CEC8] shadow-[0_0_0_3px_rgba(0,206,200,0.15)]' : 'border-white/20'
                 }`}
@@ -61,7 +59,6 @@ const DropdownSemester = ({ selections, currentSelection, onSelectChange }: Prop
                             <li key={i}>
                                 <button
                                     onClick={() => handleSelect(item)}
-                                    // RESPONSIVE FIX: Scaled text size inside the dropdown
                                     className={`w-full text-left px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-sm transition-colors ${
                                         item === currentSelection 
                                             ? 'bg-[#00CEC8]/10 text-[#00CEC8] font-bold' 
