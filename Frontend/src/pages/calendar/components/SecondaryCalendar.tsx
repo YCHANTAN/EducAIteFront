@@ -39,7 +39,6 @@ const SecondaryCalendar = ({ month, year, day, onDateChange }: Props) => {
         const days: JSX.Element[] = [];
     
         for (let i = 0; i < startDay; i++) {
-            // RESPONSIVE FIX: aspect-square keeps the grid perfect without breaking mobile layouts
             days.push(<div key={`empty-${i}`} className="w-full aspect-square xl:w-10 xl:h-10"></div>);
         }
     
@@ -51,7 +50,6 @@ const SecondaryCalendar = ({ month, year, day, onDateChange }: Props) => {
             days.push(
                 <div
                     key={dayNumber}
-                    // RESPONSIVE FIX: Shrunk text to text-[8px] for mobile so it fits in a 50/50 split
                     className={`w-full aspect-square xl:w-10 xl:h-10 flex items-center justify-center rounded-full text-[8px] sm:text-[10px] xl:text-sm font-medium transition-colors cursor-pointer 
                     ${isToday 
                         ? 'bg-[#00CEC8] text-black font-bold shadow-[0_0_10px_rgba(0,206,200,0.4)] hover:bg-[#00CEC8]/90' 
@@ -70,12 +68,10 @@ const SecondaryCalendar = ({ month, year, day, onDateChange }: Props) => {
             initial={{ opacity: 0, x: 100 }} 
             animate={{ opacity: 1, x: 0 }}    
             transition={{ duration: 0.6, ease: "easeOut" }} 
-            // THE FIX: Removed 'flex-1' and 'min-w-0' which caused the disappearance! Replaced with 'w-full block'.
             className="bg-[#111111] text-white p-2.5 sm:p-3 xl:p-5 rounded-xl xl:rounded-2xl border-[1.5px] border-white/20 shadow-lg w-full block"
         >
             <div className="flex justify-between items-center mb-2 xl:mb-4">
                 <span className="font-bold text-white text-[10px] sm:text-xs xl:text-lg truncate pr-1">
-                    {/* RESPONSIVE FIX: Only show short month (e.g., "Mar") on mobile, full string on laptop */}
                     <span className="xl:hidden">{date.toLocaleString('default', { month: 'short' })}</span>
                     <span className="hidden xl:inline">{date.toLocaleString('default', { month: 'long' })} {date.getFullYear()}</span>
                 </span>
@@ -90,7 +86,6 @@ const SecondaryCalendar = ({ month, year, day, onDateChange }: Props) => {
             </div>
 
             <div className="grid grid-cols-7 gap-0.5 xl:gap-1 text-center mb-1 xl:mb-2">
-                 {/* RESPONSIVE FIX: Single letters for mobile, two letters for laptop */}
                  {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(d => (
                      <span key={d} className="text-white/40 text-[7px] sm:text-[9px] xl:text-xs font-bold">
                          <span className="xl:hidden">{d.charAt(0)}</span>
@@ -99,7 +94,6 @@ const SecondaryCalendar = ({ month, year, day, onDateChange }: Props) => {
                  ))}
             </div>
 
-            {/* RESPONSIVE FIX: Tighter gap-0.5 for mobile */}
             <div className="grid grid-cols-7 gap-0.5 xl:gap-1">
                 {renderDays()}
             </div>

@@ -17,7 +17,6 @@ const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     
-    // RESPONSIVE FIX: Use single letter for days on mobile (M, T, W), 3-letters on laptop (Mon, Tue, Wed)
     const weekDaysMobile = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     const weekDaysLaptop = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -42,7 +41,6 @@ const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
             className="bg-[#111111] rounded-xl lg:rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] border-[1.5px] border-white/20 overflow-hidden w-full"
         >
             <div className="grid grid-cols-7 border-b-[1.5px] border-white/20 bg-black/50">
-                {/* RESPONSIVE FIX: Rendering mobile short-names and laptop long-names */}
                 {weekDaysLaptop.map((day, i) => (
                     <div key={day} className={`py-2 lg:py-4 text-center text-[10px] lg:text-[0.8rem] font-bold text-white/50 uppercase tracking-widest ${i < 6 ? 'border-r-[1.5px] border-white/20' : ''}`}>
                         <span className="lg:hidden">{weekDaysMobile[i]}</span>
@@ -51,7 +49,6 @@ const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
                 ))}
             </div>
 
-            {/* RESPONSIVE FIX: Smaller row height on mobile (80px or 100px) so the calendar doesn't take up 3 screens of scrolling */}
             <div className="grid grid-cols-7 auto-rows-[85px] sm:auto-rows-[100px] lg:auto-rows-[140px]">
                 {[...Array(firstDayOfMonth)].map((_, i) => (
                     <div key={`empty-${i}`} className="border-r-[1.5px] border-b-[1.5px] border-white/20 bg-[#1A1A1A]/50" />
@@ -70,14 +67,12 @@ const MainCalendar = ({ events, month, year, highlightedDate }: Props) => {
                                 {day}
                             </span>
 
-                            {/* RESPONSIVE FIX: Adjusted spacing and max-height for event blocks */}
                             <div className="mt-0.5 lg:mt-1 space-y-1 lg:space-y-1.5 overflow-y-auto max-h-[60px] sm:max-h-[70px] lg:max-h-[90px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                                 {items
                                     .filter(item => item.day === day && item.month === month && item.year === year)
                                     .map((item, idx) => (
                                         <div
                                             key={idx}
-                                            // RESPONSIVE FIX: Tiny text and padding on mobile so it fits in the small grid cell
                                             className={`text-[8px] sm:text-[9px] lg:text-[11px] px-1 lg:px-2 py-0.5 lg:py-1.5 rounded-sm lg:rounded-md font-bold border truncate transition-transform hover:scale-[1.02] 
                                             ${item.eventType === 'note' ? 'bg-white/10 text-white border-white/20' : 'bg-[#00CEC8]/15 text-[#00CEC8] border-[#00CEC8]/30'} 
                                             ${isHighlighted ? 'animate-pulse' : ''}`}
